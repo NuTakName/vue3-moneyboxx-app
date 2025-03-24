@@ -1,14 +1,15 @@
-<script>
-import { mapActions, mapGetters } from 'vuex';
+<script setup>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 
-export default {
-  computed: mapGetters([
-    'count',
-  ]),
-  methods: mapActions([
-    'increment',
-    'decrement',
-  ])
+const store = useStore();
+const count = computed(() => store.state.count);
+const increment = () => {
+    store.dispatch('increment');
+  };
+
+const decrement = () => {
+  store.dispatch('decrement')
 }
 
 </script>
