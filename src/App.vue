@@ -1,25 +1,25 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
+import MRegistation from './components/MRegistation.vue';
 
 const store = useStore();
-const count = computed(() => store.state.count);
-const increment = () => {
-    store.dispatch('increment');
-  };
+const user = computed(() => store.state.user);
 
-const decrement = () => {
-  store.dispatch('decrement')
+const isRegistrationVisible = ref()
+
+if (Object.keys(user.value).length === 0) {
+  isRegistrationVisible.value = true
+} else {
+  isRegistrationVisible.value = false
 }
+
+
 
 </script>
 
 <template>
-  <div>
-    <h1>Count: {{ count }}</h1>
-    <button @click="increment">Increment</button>
-    <button @click="decrement">Decrement</button>
-  </div>
+  <MRegistation v-if="isRegistrationVisible"></MRegistation>
 
 </template>
 
