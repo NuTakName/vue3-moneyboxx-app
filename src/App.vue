@@ -7,7 +7,6 @@ const store = useStore();
 const user = computed(() => store.state.user);
 
 const isRegistrationVisible = computed(() => {
-  console.log(user.value, "Ddddddd")
   if (!user.value) {
     return true
   } else return false
