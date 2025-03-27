@@ -4,6 +4,9 @@ import { useStore } from 'vuex';
 import MMainButton from './MMainButton.vue';
 import MCurrency from './MCurrency.vue';
 import { fiatCurrencies, cryptoCurrencies } from '@/utils';
+import { getOrAddCurrency } from '@/api/currency';
+import { addBudget } from '@/api/budgets';
+import { addUser, setCurrentBudget } from '@/api/user';
 
 const store = useStore();
 const tgUser = computed(() => store.state.tgUser);
@@ -17,6 +20,7 @@ const toogleIsCurrencyVisible = () => {
 }
 
 const currency = ref("fiat");
+const budgetName = ref()
 const currencyData = ref()
 
 const currentCurrency = computed(() => {
@@ -31,6 +35,38 @@ const setCurrencyData = (currency) => {
     currencyData.value = currency
 }
 
+const initUser = async() => {
+    if (!budgetName.value) {
+        return;
+    }
+    let cur = {
+        "name": currentCurrency.value.name,
+        "code": currentCurrency.value.code,
+        "symbol": currentCurrency.value.symbol,
+        "type_": currency.value
+    }
+    let curEntity = await getOrAddCurrency(cur)
+    let u = {
+        "id": tgUser.value.id,
+        "name": tgUser.value.name,
+        "current_moneybox": null,
+        "current_budget": null
+        }
+    await addUser(u)
+    let budget = {
+        "name": budgetName.value,
+        "user_id": tgUser.value.id,
+        "currency_id": curEntity.id
+        }
+    let budgetEntity = await addBudget(budget)
+    let data = {
+        "user_id": tgUser.value.id,
+        "current_budget": budgetEntity.id
+    }
+    let newUser = await setCurrentBudget(data) 
+    store.dispatch("SET_USER", newUser.id)
+}
+
 
 </script>
 
@@ -41,12 +77,14 @@ const setCurrencyData = (currency) => {
     </header>
     <section>
       <p>Заполните информацию о бюджете</p>
-      <form>
+      <form @submit.prevent="initUser">
         <input 
             type="text"
             class="m-registration-budget-title"
             placeholder="Название"
-            required>
+            required
+            v-model="budgetName"
+            >
         <div class="m-registration-radio">
             <input 
                 type="radio" 
@@ -66,9 +104,9 @@ const setCurrencyData = (currency) => {
             @click="toogleIsCurrencyVisible"
             >{{ currentCurrency.name }}: {{ currentCurrency.code }}
         </div>
+        <MMainButton :name="buttonName"></MMainButton>
       </form>
     </section>
-    <MMainButton :name="buttonName"></MMainButton>
   </div>
   <MCurrency 
     v-if="isMCurrencyVisible" 
