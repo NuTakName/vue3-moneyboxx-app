@@ -13,5 +13,24 @@ const getUser = async(userId) => {
 }
 
 
+const addUser = async(u) => {
+    try {
+        const user = await axios.post(`${API_BASE_URL}/users/`, u);
+        return user.data
+    } catch {
+        console.error("Не удалось добавить пользователя")
+    }
+}
 
-export {getUser}
+const setCurrentBudget = async(data) => {
+    try {
+        const user = await axios.patch(`${API_BASE_URL}/users/set_current_budget`, data)
+        return user.data
+    } catch {
+        console.error("Не удалось установить текущий бюджет")
+    }
+}
+
+
+
+export {getUser, addUser, setCurrentBudget}
