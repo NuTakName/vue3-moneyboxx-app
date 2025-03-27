@@ -50,4 +50,17 @@ const setCurrency = (currency) => {
   color: white;
 
 }
+
+button{
+    width: 60%;
+    text-align: center;
+    color: black;
+    background-color: white;
+    padding: 10px;
+    border: 3px solid black;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+}
 </style>
