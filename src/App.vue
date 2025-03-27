@@ -6,13 +6,12 @@ import MRegistation from './components/MRegistation.vue';
 const store = useStore();
 const user = computed(() => store.state.user);
 
-const isRegistrationVisible = ref()
-
-if (Object.keys(user.value).length === 0) {
-  isRegistrationVisible.value = true
-} else {
-  isRegistrationVisible.value = false
-}
+const isRegistrationVisible = computed(() => {
+  console.log(user.value, "Ddddddd")
+  if (!user.value) {
+    return true
+  } else return false
+});
 
 
 
