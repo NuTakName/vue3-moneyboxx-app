@@ -7,15 +7,25 @@ const props = defineProps({
     required: true
 })
 
+const emit = defineEmits(["click"])
+
+const clickButton = () => {
+    emit('click')
+}
+
 
 
 
 </script>
 
 <template>
-    <div class="m-main-button-container">
-        {{ name }}
-    </div>
+    <button 
+        class="m-main-button-container"
+        @click="clickButton"
+        type="submit"
+        >
+            {{ name }}
+    </button>
 
 </template>
 
@@ -29,7 +39,7 @@ const props = defineProps({
     width: 80%;
     color: black;
     background-color: white;
-    padding: 10px;
+    padding: 15px 0px 15px 0px;
     text-align: center;
     border: 3px solid black;
     border-radius: 12px;
