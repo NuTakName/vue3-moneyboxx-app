@@ -28,6 +28,11 @@ const activeNavigation = ref(0)
     > {{ item.name }}
     </router-link>
   </div>
+  <div class="m-nav-data">
+    <div class="m-nav-data-income">+100</div>
+    <div>Месяц 2025</div>
+    <div class="m-nav-data-expense">-200</div>
+  </div>
 </template>
 
 <style scoped>
@@ -66,11 +71,28 @@ const activeNavigation = ref(0)
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
-.circle:last-child{
+.circle:last-child, .m-nav-data-expense{
   margin-right: 20px;
 }
 
-.circle:first-child{
+.circle:first-child, .m-nav-data-income{
   margin-left: 20px;
 }
+
+.m-nav-data-expense, .m-nav-data-income{
+  width: 81px;
+}
+
+.m-nav-data{
+  width: 100%;
+  height: 6vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  border-bottom: 4px solid black;
+}
+
+
+
 </style>
