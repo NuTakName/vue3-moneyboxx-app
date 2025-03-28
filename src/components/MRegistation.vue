@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import MMainButton from './MMainButton.vue';
-import MCurrency from './MCurrency.vue';
+import MDropdownSelector from './MDropdownSelector.vue';
 import { fiatCurrencies, cryptoCurrencies } from '@/utils';
 import { getOrAddCurrency } from '@/api/currency';
 import { addBudget } from '@/api/budgets';
@@ -13,10 +13,10 @@ const tgUser = computed(() => store.state.tgUser);
 
 const buttonName = "Создать аккаунт"
 
-const isMCurrencyVisible = ref(false)
+const isDropDownVisible = ref(false)
 
-const toogleIsCurrencyVisible = () => {
-    isMCurrencyVisible.value = !isMCurrencyVisible.value
+const toogleDropDownVisible = () => {
+    isDropDownVisible.value = !isDropDownVisible.value
 }
 
 const currency = ref("fiat");
@@ -101,20 +101,20 @@ const initUser = async() => {
         </div>
         <div 
             class="m-registration-currency"
-            @click="toogleIsCurrencyVisible"
+            @click="toogleDropDownVisible"
             >{{ currentCurrency.name }}: {{ currentCurrency.code }}
         </div>
         <MMainButton :name="buttonName"></MMainButton>
       </form>
     </section>
   </div>
-  <MCurrency 
-    v-if="isMCurrencyVisible" 
-    :currency="currency"
-    @close="toogleIsCurrencyVisible"
-    @currency="setCurrencyData"
+  <m-dropdown-selector
+    v-if="isDropDownVisible" 
+    :data="currency"
+    @close="toogleDropDownVisible"
+    @data="setCurrencyData"
     >
-  </MCurrency>
+  </m-dropdown-selector>
 </template>
 
 <style scoped>
