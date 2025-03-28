@@ -24,4 +24,37 @@ const cryptoCurrencies = [
     {name: "Cardano", code: "ADA"}
 ]
 
-export {fiatCurrencies, cryptoCurrencies}
+
+const expenseСategories = [
+    "Гаджеты",
+    "Питомцы",
+    "Спорт",
+    "Жилье",
+    "Транспорт",
+    "Питание",
+    "Здоровье",
+    "Образование",
+    "Развлечения",
+    "Гигиена и уход",
+    "Одежда",
+    "Связь",
+    "Подарки",
+    "Финансы",
+    "Другое"
+]
+
+const incomeСategories = [
+    "Образование",
+    "Зарплата",
+    "Бизнес",
+    "Фриланс",
+    "Инвестиции",
+    "Пожертвования",
+    "Подарки",
+    "Социальные выплаты",
+    "Аренда",
+    "Роялти",
+    "Другое"
+]
+
+export {fiatCurrencies, cryptoCurrencies, incomeСategories, expenseСategories}
