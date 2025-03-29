@@ -30,7 +30,6 @@ const tgUser = {
     store.dispatch('SET_TG_USER', tgUser);
     const user = await getUser(tgUser.id)
     await store.dispatch('SET_USER', user);
-    await store.dispatch("SET_OPERATIONS", user.current_budget)
   };
 
   export default initUser
