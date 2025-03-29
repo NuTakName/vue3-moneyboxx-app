@@ -8,6 +8,11 @@ import { router } from './router';
 
 const app = createApp(App);
 app.use(store);
-initUser()
-app.use(router)
-app.mount('#app');
+app.use(router);
+
+const initApp = async () => {
+  await initUser();
+  app.mount('#app');
+};
+
+initApp();
