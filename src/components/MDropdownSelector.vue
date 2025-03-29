@@ -73,12 +73,17 @@ button{
     width: 60%;
     text-align: center;
     color: black;
-    background-color: white;
+    background-color: blue;
     padding: 10px;
     border: 3px solid black;
     border-radius: 12px;
     cursor: pointer;
     font-size: 16px;
+    font-weight: 700;
+}
+
+.m-category button span{
+    font-size: 18px;
     font-weight: 700;
 }
 </style>
