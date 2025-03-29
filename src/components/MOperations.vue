@@ -3,6 +3,7 @@ import { ref, onMounted, watch} from 'vue';
 import MMainButton from './MMainButton.vue';
 import MOperation from './MOperation.vue';
 import { getOperations } from '@/api/operations';
+import { formatValue } from '@/utils';
 
 let buttonName = "+ Добавить операцию"
 
@@ -124,7 +125,8 @@ requestAnimationFrame(updatePositions);
             class="m-operation"
             :style="{ top: positions[index]?.y + 'px', left: positions[index]?.x + 'px' }"
         >
-            <div>{{ operation.value }}</div>
+            <div>{{ operation.category_name }}</div>
+            <div>{{ formatValue(operation.value, operation.currency_symbol, operation.currency_code) }}</div>
         </div>
     </div>
 
