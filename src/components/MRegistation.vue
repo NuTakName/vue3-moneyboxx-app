@@ -64,7 +64,7 @@ const initUser = async() => {
         "current_budget": budgetEntity.id
     }
     let newUser = await setCurrentBudget(data) 
-    store.dispatch("SET_USER", newUser.id)
+    store.dispatch("SET_USER", newUser)
 }
 
 
