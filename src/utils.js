@@ -57,4 +57,34 @@ const incomeСategories = [
     "Другое"
 ]
 
-export {fiatCurrencies, cryptoCurrencies, incomeСategories, expenseСategories}
+const formatValue = (value, symbol, code) => {
+    let totalValue;
+    const numericValue = parseFloat(value) || 0;
+    if (numericValue > 1e12 || numericValue < -1e12) {
+      totalValue = "> " + (numericValue / 1e12).toFixed(0) + " трлн"; 
+    }
+    else if (numericValue == 1e12 || numericValue == -1e12) {
+      totalValue = (numericValue / 1e12).toFixed(0) + " трлн"; 
+    }
+    else if (numericValue >= 1e9 || numericValue <= -1e9) {
+      totalValue = (numericValue / 1e9).toFixed(2) + " млрд";
+    } else if (numericValue >= 1e6 || numericValue <= -1e6) {
+      totalValue = (numericValue / 1e6).toFixed(2) + " млн";
+    } else {
+      totalValue = numericValue.toLocaleString("ru-RU")
+    }
+    if (symbol) {
+      if (symbol == '$') {
+        totalValue = symbol + totalValue
+      } else {
+        totalValue = totalValue + " " + symbol
+      }
+    } else {
+      totalValue = totalValue + " " + code
+    }
+    return totalValue;
+  }
+
+
+
+export {fiatCurrencies, cryptoCurrencies, incomeСategories, expenseСategories, formatValue}
