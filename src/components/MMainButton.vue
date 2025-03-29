@@ -38,7 +38,7 @@ const clickButton = () => {
     transform: translateX(-50%);
     width: 80%;
     color: black;
-    background-color: white;
+    background-color: blue;
     padding: 15px 0px 15px 0px;
     text-align: center;
     border: 3px solid black;
