@@ -53,7 +53,6 @@ const insertOperation = async() => {
         "description": null,
         "user_id": user.value.id
     }
-    console.log(c)
     let cat = await getOrAddCategory(c)
     let operation = {
         "budget_id": user.value.current_budget,

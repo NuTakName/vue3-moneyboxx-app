@@ -1,11 +1,16 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
 import MMainButton from './MMainButton.vue';
 import MOperation from './MOperation.vue';
 
 let buttonName = "+ Добавить операцию"
 
 
+const store = computed()
+
+const operations = computed(() => store.state.operations);
+console.log(operations)
 const isCreateOperationVisible = ref(false)
 
 const toogleIsCreateOperationVisilbe = () => {
