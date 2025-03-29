@@ -9,7 +9,7 @@ const tgUser = {
   };
 
 
-  const initUser = () => {
+  const initUser = async() => {
     const tg = window.Telegram.WebApp;
     const initData = tg.initData;
     if (initData) {
@@ -28,7 +28,9 @@ const tgUser = {
         tgUser.theme = "dark";
     }
     store.dispatch('SET_TG_USER', tgUser);
-    store.dispatch('SET_USER', tgUser.id);
+    const user = await getUser(tgUser.id)
+    await store.dispatch('SET_USER', user);
+    await store.dispatch("SET_OPERATIONS", user.current_budget)
   };
 
   export default initUser
