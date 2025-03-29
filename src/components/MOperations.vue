@@ -7,10 +7,10 @@ import MOperation from './MOperation.vue';
 let buttonName = "+ Добавить операцию"
 
 
-const store = computed()
+const store = useStore();
 
 const operations = computed(() => store.state.operations);
-console.log(operations)
+console.log(operations.value.length)
 const isCreateOperationVisible = ref(false)
 
 const toogleIsCreateOperationVisilbe = () => {
