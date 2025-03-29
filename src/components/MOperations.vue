@@ -16,10 +16,24 @@ const toogleIsCreateOperationVisilbe = () => {
 </script>
 
 <template>
-    <div></div>
+    <div class="m-operations"></div>
     <m-main-button :name="buttonName" @click="toogleIsCreateOperationVisilbe"></m-main-button>
-    <m-operation v-if="isCreateOperationVisible"></m-operation>
+    <m-operation 
+        v-if="isCreateOperationVisible"
+        @close="toogleIsCreateOperationVisilbe"
+        >
+    </m-operation>
 </template>
 
 <style scoped>
+
+
+.m-operations{
+    width: 100%;
+    border-bottom: 4px solid black;
+    height: 66.5vh;
+}
+
+
+
 </style>
