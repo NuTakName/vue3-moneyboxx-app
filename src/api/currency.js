@@ -5,7 +5,7 @@ import axios from "axios";
 
 const getOrAddCurrency = async(currency) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/currency/${currency.name}`)
+        const response = await axios.get(`${API_BASE_URL}/currency/by_name/${currency.name}`)
         return response.data
     } catch {
         try {
