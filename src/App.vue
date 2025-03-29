@@ -19,7 +19,7 @@ const isRegistrationVisible = computed(() => {
 </script>
 
 <template>
-  <!--<MRegistation v-if="isRegistrationVisible"></MRegistation>-->
+  <MRegistation v-if="isRegistrationVisible"></MRegistation>
   <m-navigation></m-navigation>
   <router-view></router-view>
 
