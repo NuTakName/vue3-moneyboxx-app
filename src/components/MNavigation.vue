@@ -85,7 +85,7 @@ const activeNavigation = ref(0)
 
 .m-nav-data{
   width: 100%;
-  height: 6vh;
+  height: 8vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
