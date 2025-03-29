@@ -1,10 +1,16 @@
 <script setup>
 import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
 import MMainButton from './MMainButton.vue';
 import MDropdownSelector from './MDropdownSelector.vue';
 import { expenseСategories, incomeСategories } from '@/utils';
+import { getOrAddCategory } from '@/api/categories';
+import { addOperation } from '@/api/operations';
 
 let buttonName = "Добавить"
+
+const store = useStore();
+const user = computed(() => store.state.user);
 
 const emit = defineEmits(['close'])
 
@@ -12,7 +18,7 @@ const emit = defineEmits(['close'])
 const ammount = ref()
 const description = ref()
 const typeOperation = ref('income')
-const category = ref()
+const category = ref('Образование')
 const isDropDownVisible = ref(false)
 
 
@@ -37,9 +43,30 @@ const closeAddOperation = () => {
     emit('close')
 }
 
-const addOperation = () => {
-    console.log("Добавили")
-    closeAddOperation()
+
+
+const insertOperation = async() => {
+    let c = {
+        "photo_path": null,
+        "type_": typeOperation.value,
+        "name": category.value,
+        "description": null,
+        "user_id": user.value.id
+    }
+    console.log(c)
+    let cat = await getOrAddCategory(c)
+    let operation = {
+        "budget_id": user.value.current_budget,
+        "type_": typeOperation.value,
+        "value": ammount.value,
+        "description": null,
+        "category_id": cat.id,
+        "sub_category_id": null
+    }
+    let result = await addOperation(operation)
+    if (result) {
+        closeAddOperation()
+    }
 }
 
 
@@ -49,7 +76,7 @@ const addOperation = () => {
 
 <template>
     <div class="m-operation" @click="closeAddOperation">
-        <form class="m-operation-form" @submit.prevent="addOperation">
+        <form class="m-operation-form" @submit.prevent="insertOperation">
             <label>Размер операции</label>
             <input 
                 type="number" 
