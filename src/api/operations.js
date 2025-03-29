@@ -12,4 +12,13 @@ const addOperation = async(operation) => {
     }
 
 
-export {addOperation}
+const getOperations = async(currentBudget) => {
+    try{
+        const response = await axios.get(`${API_BASE_URL}/operations/list/${currentBudget}`)
+        return response.data
+    } catch {
+        console.error("Не удалось получить список операций")
+    }
+}
+
+export {addOperation, getOperations}
