@@ -1,12 +1,14 @@
 <script setup>
-import { ref, onMounted, watch} from 'vue';
+import { ref, onMounted, watch, computed} from 'vue';
+import { useStore } from 'vuex';
 import MMainButton from './MMainButton.vue';
 import MOperation from './MOperation.vue';
 import { getOperations } from '@/api/operations';
 import { formatValue } from '@/utils';
 
 let buttonName = "+ Добавить операцию"
-
+const store = useStore();
+const user = computed(() => store.state.user);
 
 const isCreateOperationVisible = ref(false)
 
@@ -14,10 +16,16 @@ const toogleIsCreateOperationVisilbe = () => {
     isCreateOperationVisible.value = !isCreateOperationVisible.value
 }
 
+const setOperation = () => {
+  getAllOperation()
+  toogleIsCreateOperationVisilbe()
+}
+
+
 const operations = ref([])
 
 const getAllOperation = async() => {
-    const result = await getOperations(22)
+    const result = await getOperations(user.value.current_budget)
     operations.value = result
 
 }
@@ -41,8 +49,7 @@ onMounted(() => {
 watch(
   () => operations.value,
   (newOperations, oldOperations) => {
-    const isFullUpdate = !oldOperations || newOperations.length === 0 || newOperations.length > oldOperations.length + 1 || !oldOperations.every((oldOp, index) => newOperations[index] && JSON.stringify(oldOp) === JSON.stringify(newOperations[index]));
-    
+    const isFullUpdate = !oldOperations || newOperations.length === 0 || newOperations.length > oldOperations.length + 1;
     if (isFullUpdate) {
       positions.value = [];
       velocities.value = [];
@@ -50,7 +57,19 @@ watch(
         setPosition(o);
       }
     } else {
-      setPosition(newOperations[newOperations.length - 1]);
+      let changedIndex = -1;
+      for (let i = 0; i < newOperations.length; i++) {
+        if (oldOperations[i] !== newOperations[i]) {
+          changedIndex = i;
+          break;
+        }
+      }
+
+      if (changedIndex !== -1) {
+        setPosition(newOperations[changedIndex]);
+      } else if (newOperations.length > oldOperations.length) {
+        setPosition(newOperations[newOperations.length - 1]);
+      }
     }
   },
   { deep: true }
@@ -133,7 +152,7 @@ requestAnimationFrame(updatePositions);
     <m-main-button :name="buttonName" @click="toogleIsCreateOperationVisilbe"></m-main-button>
     <m-operation 
         v-if="isCreateOperationVisible"
-        @close="toogleIsCreateOperationVisilbe"
+        @close="setOperation"
         >
     </m-operation>
 </template>
