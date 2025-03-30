@@ -9,7 +9,7 @@ const routes = [
     {path: '/', name: 'Operations', component: MOperations, props: true},
     {path: '/account', name: "Account", component: MAccount, props: true},
     {path: '/moneybox', name: "Moneybox", component: MMoneybox, props: true},
-    {path: '/list_operation', name: "ListOperations", component: MListOperation}
+    {path: '/list_operation/:id', name: "ListOperations", component: MListOperation, props: true}
 ]
 
 const router = createRouter(
