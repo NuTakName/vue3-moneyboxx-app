@@ -39,6 +39,13 @@ const containerHeight = ref(0)
 const containerWidth = ref(0)
 
 
+const getClass = (operation) => (operation.type_ === "income" ? "income" : "expense");
+
+
+const setCurrentOperation = (operation) => {
+  store.dispatch("UPDATE_OPERATIONS", operation)
+}
+
 onMounted(() => {
   const container = document.querySelector(".m-operations");
   containerHeight.value = container.clientHeight;
@@ -136,15 +143,17 @@ requestAnimationFrame(updatePositions);
 
 <template>
     <div class="m-operations">
-        <div 
+        <router-link 
             v-for="(operation, index) in operations"
+            :to="{name: 'ListOperations'}"
             :key="index"
-            class="m-operation"
+            :class="['m-operation', getClass(operation)]"
             :style="{ top: positions[index]?.y + 'px', left: positions[index]?.x + 'px' }"
+            @click.prevent="setCurrentOperation(operation)"
         >
             <div>{{ operation.category_name }}</div>
             <div>{{ formatValue(operation.value, operation.currency_symbol, operation.currency_code) }}</div>
-        </div>
+        </router-link>
     </div>
 
     <m-main-button :name="buttonName" @click="toogleIsCreateOperationVisilbe"></m-main-button>
@@ -186,6 +195,15 @@ requestAnimationFrame(updatePositions);
   cursor: pointer;
   text-decoration: none;
   background-color: blue;
+}
+
+
+.expense{
+  background-color: #6f0f0f;
+}
+
+.income{
+  background-color: #097004;
 }
 
 </style>
