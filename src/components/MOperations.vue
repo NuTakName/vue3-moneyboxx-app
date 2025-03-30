@@ -42,9 +42,6 @@ const containerWidth = ref(0)
 const getClass = (operation) => (operation.type_ === "income" ? "income" : "expense");
 
 
-const setCurrentOperation = (operation) => {
-  store.dispatch("UPDATE_OPERATIONS", operation)
-}
 
 onMounted(() => {
   const container = document.querySelector(".m-operations");
@@ -145,11 +142,10 @@ requestAnimationFrame(updatePositions);
     <div class="m-operations">
         <router-link 
             v-for="(operation, index) in operations"
-            :to="{name: 'ListOperations'}"
+            :to="{path: `/list_operation/${operation.category_id}`}"
             :key="index"
             :class="['m-operation', getClass(operation)]"
             :style="{ top: positions[index]?.y + 'px', left: positions[index]?.x + 'px' }"
-            @click.prevent="setCurrentOperation(operation)"
         >
             <div>{{ operation.category_name }}</div>
             <div>{{ formatValue(operation.value, operation.currency_symbol, operation.currency_code) }}</div>
