@@ -65,9 +65,7 @@ watch(
         }
       }
 
-      if (changedIndex !== -1) {
-        setPosition(newOperations[changedIndex]);
-      } else if (newOperations.length > oldOperations.length) {
+    if (newOperations.length > oldOperations.length) {
         setPosition(newOperations[newOperations.length - 1]);
       }
     }
