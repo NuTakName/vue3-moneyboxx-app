@@ -1,9 +1,5 @@
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-
-const navigation = ["Бюджет", "Аккаунт", "Копилка"];
-const routes = ["/", "/account", "/moneybox"];
 
 const navigations = [
   {"name": "Бюджет", "link": '/'},
