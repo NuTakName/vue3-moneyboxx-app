@@ -6,6 +6,7 @@ import * as mutations from './mutations'
 const state = {
     tgUser: {},
     user: {},
+    operations: []
   }
   
   const store = createStore({

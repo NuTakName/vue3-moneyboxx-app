@@ -5,3 +5,7 @@
   export const SET_USER = async({commit}, user) => {
     commit('SET_USER', user);
   }
+
+  export const UPDATE_OPERATIONS = ({commit}, operation) => {
+    commit("UPDATE_OPERATIONS", operation)
+  }
