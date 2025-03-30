@@ -87,4 +87,25 @@ const formatValue = (value, symbol, code) => {
 
 
 
-export {fiatCurrencies, cryptoCurrencies, incomeСategories, expenseСategories, formatValue}
+const formatDate = (dateString) => {
+  const options = { 
+    weekday: 'short',
+    day: 'numeric',
+    month: 'long'
+  };
+  const date = new Date(dateString);
+  return date.toLocaleString('ru-RU', options);
+  };
+  
+const formatTime = (dateString) => {
+  const options = {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false 
+  };
+  const date = new Date(dateString);
+  return date.toLocaleTimeString('ru-RU', options);
+  }
+
+
+export {fiatCurrencies, cryptoCurrencies, incomeСategories, expenseСategories, formatValue, formatDate, formatTime}
