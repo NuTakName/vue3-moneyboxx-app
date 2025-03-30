@@ -5,7 +5,7 @@ import MMainButton from './MMainButton.vue';
 import MDropdownSelector from './MDropdownSelector.vue';
 import { expenseСategories, incomeСategories } from '@/utils';
 import { getOrAddCategory } from '@/api/categories';
-import { addOperation } from '@/api/operations';
+import { addOrUpdateOperation } from '@/api/operations';
 
 let buttonName = "Добавить"
 
@@ -62,7 +62,7 @@ const insertOperation = async() => {
         "category_id": cat.id,
         "sub_category_id": null
     }
-    let result = await addOperation(operation)
+    let result = await addOrUpdateOperation(operation)
     if (result) {
         closeAddOperation()
     }
