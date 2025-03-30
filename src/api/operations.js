@@ -2,7 +2,7 @@ import API_BASE_URL from "@/config";
 import axios from "axios";
 
 
-const addOrUpdateOperation = async(operation) => {
+const addOperation = async(operation) => {
     try {
         const response = await axios.post(`${API_BASE_URL}/operations/`, operation);
         return response.data
@@ -21,4 +21,13 @@ const getOperations = async(currentBudget) => {
     }
 }
 
-export {addOrUpdateOperation, getOperations}
+
+const getOperationsByCategoryId = async(categoryId) => {
+    try{
+        const response = await axios.get(`${API_BASE_URL}/operations/list_by_category_id/${categoryId}`)
+        return response.data
+    } catch {
+        console.error("Не удалось получить список операций")
+    }
+}
+export {addOperation, getOperations, getOperationsByCategoryId}
