@@ -1,5 +1,7 @@
 <script setup>
 import { ref } from 'vue';
+import MDropdownSelector from './MDropdownSelector.vue';
+
 
 const navigations = [
   {"name": "Бюджет", "link": '/'},
@@ -8,7 +10,21 @@ const navigations = [
 ]
 
 const activeNavigation = ref(0)
+const data = ref('month')
+const cuurentMonth = ref(new Date().getMonth() + 1)
 
+console.log(cuurentMonth.value)
+
+const isDropdownSelectorVisible = ref(false)
+
+const toogleIsDropdownSelectorVisible = () => {
+  isDropdownSelectorVisible.value = !isDropdownSelectorVisible.value
+}
+
+const setCurrentMonth = (month) => {
+  cuurentMonth.value = month + 1
+  console.log(cuurentMonth.value)
+}
 
 </script>
 
@@ -26,9 +42,16 @@ const activeNavigation = ref(0)
   </div>
   <div class="m-nav-data">
     <div class="m-nav-data-income">+100</div>
-    <div>Месяц 2025</div>
+    <div @click="toogleIsDropdownSelectorVisible">Месяц 2025</div>
     <div class="m-nav-data-expense">-200</div>
   </div>
+  <m-dropdown-selector 
+    v-if="isDropdownSelectorVisible" 
+    :data="data"
+    @close="toogleIsDropdownSelectorVisible"
+    @data="setCurrentMonth"
+    >
+  </m-dropdown-selector>
 </template>
 
 <style scoped>
