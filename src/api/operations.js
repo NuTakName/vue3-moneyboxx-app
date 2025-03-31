@@ -30,4 +30,26 @@ const getOperationsByCategoryId = async(categoryId) => {
         console.error("Не удалось получить список операций")
     }
 }
-export {addOperation, getOperations, getOperationsByCategoryId}
+
+
+const deleteOperation = async(operationId) => {
+    try{
+        await axios.delete(`${API_BASE_URL}/operations/${operationId}`)
+    } catch {
+        console.error("Не удалось удалить операцию")
+    }
+}
+
+
+const updateOperation = async(operation) => {
+    try {
+        const response = await axios.put(`${API_BASE_URL}/operations/`, operation);
+        return response.data
+    } catch {
+        console.error("Не удалось обновить операцию")
+    }
+    }
+
+
+
+export {addOperation, getOperations, getOperationsByCategoryId, deleteOperation, updateOperation}
