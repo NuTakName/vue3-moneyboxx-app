@@ -57,6 +57,11 @@ const incomeСategories = [
     "Другое"
 ]
 
+
+const months = [
+  "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
+]
+
 const formatValue = (value, symbol, code) => {
     let totalValue;
     const numericValue = parseFloat(value) || 0;
@@ -108,4 +113,13 @@ const formatTime = (dateString) => {
   }
 
 
-export {fiatCurrencies, cryptoCurrencies, incomeСategories, expenseСategories, formatValue, formatDate, formatTime}
+export {
+  fiatCurrencies,
+  cryptoCurrencies, 
+  incomeСategories, 
+  expenseСategories, 
+  formatValue, 
+  formatDate, 
+  formatTime,
+  months
+}
