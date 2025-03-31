@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import MOperation from './MOperation.vue';
 import { formatDate, formatTime, formatValue } from '@/utils';
@@ -8,9 +9,12 @@ import { getOperationsByCategoryId } from '@/api/operations';
 
 const mark = ref()
 const store = useStore();
+const router = useRouter();
 const tgUser = computed(() => store.state.tgUser);
 const isUpdateOperationVisible = ref(false)
 const operations = ref([])
+const currentOperation = ref()
+
 
 const props = defineProps({
   id: String,
@@ -25,7 +29,11 @@ const getOperations = async() => {
 getOperations()
 
 
-const toogleUpdateOperationVisible = () => {
+const toogleUpdateOperationVisible = (operation) => {
+  if (operation) {
+    currentOperation.value = operation
+  }
+  getOperations()
   isUpdateOperationVisible.value = !isUpdateOperationVisible.value
 }
 
@@ -67,6 +75,7 @@ const getClass = (operation) => {
     <div v-if=operations.length :class="['m-list-operation-name', getClass(operations[0])]">
        {{ operations[0].category_name }}
     </div>
+    <div class="scrollable">
       <div 
         v-for="(operations, date) in groupOperation" 
         :key="date"
@@ -75,23 +84,34 @@ const getClass = (operation) => {
           {{ date }}
         </div>
         <div v-for="(operation, index) in operations" :key="index">
-            <div 
-              :class="['m-list-operation-info-container', {'m-list-operation-info-container-dark': tgUser.theme == 'dark'}]"
-              @click="toogleUpdateOperationVisible"
-            >
-                <div class="m-list-operation-info">
-                    <div> {{ mark }} {{ formatValue(operation.value, operation.currency_symbol, operation.currency_code) }}</div>
-                    <div v-if="operation.description">{{ o.description }}</div>
-                </div>
-                <div class="m-list-operation-time">{{ formatTime(operation.date) }}</div>
+          <div 
+            :class="['m-list-operation-info-container', {'m-list-operation-info-container-dark': tgUser.theme == 'dark'}]"
+            @click="toogleUpdateOperationVisible(operation)"
+          >
+            <div class="m-list-operation-info">
+              <div> {{ mark }} {{ formatValue(operation.value, operation.currency_symbol, operation.currency_code) }}</div>
+              <div v-if="operation.description">{{ operation.description }}</div>
             </div>
+            <div class="m-list-operation-time">{{ formatTime(operation.date) }}</div>
+          </div>
+          <m-operation 
+            v-if="isUpdateOperationVisible" 
+            @close="toogleUpdateOperationVisible"
+            :operation="currentOperation"
+            :operations="operations"
+          >
+          </m-operation>
         </div>
       </div>
-      <m-operation v-if="isUpdateOperationVisible" @close="toogleUpdateOperationVisible"></m-operation>
+    </div>
 </template>
 
 <style scoped>
 
+.scrollable{
+  max-height: 65vh;
+  overflow-y: auto;
+}
 
 .m-list-operation-name{
   margin: 16px 0px 16px 0px;
