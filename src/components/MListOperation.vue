@@ -17,8 +17,10 @@ const currentOperation = ref()
 
 
 const props = defineProps({
-  id: String,
-  required: true
+  id: {
+    type: String,
+    required: true
+  }
 })
 
 const getOperations = async() => {
