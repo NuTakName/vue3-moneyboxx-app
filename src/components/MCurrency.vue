@@ -3,8 +3,10 @@ import { computed, ref } from 'vue';
 import { fiatCurrencies, cryptoCurrencies } from '@/utils';
 
 const props = defineProps({
-    currency: String,
-    required: true
+    currency: {
+        type: String,
+        required: true
+    }
 })
 
 const emit = defineEmits(["close", "currency"])
