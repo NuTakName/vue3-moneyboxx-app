@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from 'vue';
+import { useStore } from 'vuex';
 import MDropdownSelector from './MDropdownSelector.vue';
 
 
+const store = useStore();
 const navigations = [
   {"name": "Бюджет", "link": '/'},
   {"name": "Аккаунт", "link": '/account'},
@@ -11,9 +13,7 @@ const navigations = [
 
 const activeNavigation = ref(0)
 const data = ref('month')
-const cuurentMonth = ref(new Date().getMonth() + 1)
 
-console.log(cuurentMonth.value)
 
 const isDropdownSelectorVisible = ref(false)
 
@@ -22,8 +22,7 @@ const toogleIsDropdownSelectorVisible = () => {
 }
 
 const setCurrentMonth = (month) => {
-  cuurentMonth.value = month + 1
-  console.log(cuurentMonth.value)
+  store.dispatch("SET_CURRENT_MONTH", month + 1)
 }
 
 </script>
