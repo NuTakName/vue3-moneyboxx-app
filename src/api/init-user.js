@@ -30,6 +30,8 @@ const tgUser = {
     store.dispatch('SET_TG_USER', tgUser);
     const user = await getUser(tgUser.id)
     await store.dispatch('SET_USER', user);
+    const month = new Date().getMonth() + 1
+    await store.dispatch('SET_CURRENT_MONTH', month)
   };
 
   export default initUser
