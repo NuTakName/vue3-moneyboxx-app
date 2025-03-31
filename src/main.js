@@ -7,11 +7,12 @@ import initUser from './api/init-user';
 import { router } from './router';
 
 const app = createApp(App);
-app.use(store);
-app.use(router);
+
 
 const initApp = async () => {
+  app.use(store);
   await initUser();
+  app.use(router);
   app.mount('#app');
 };
 
