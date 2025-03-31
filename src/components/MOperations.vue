@@ -9,6 +9,7 @@ import { formatValue } from '@/utils';
 let buttonName = "+ Добавить операцию"
 const store = useStore();
 const user = computed(() => store.state.user);
+const month = computed(() => store.state.month)
 
 const isCreateOperationVisible = ref(false)
 
@@ -25,12 +26,17 @@ const setOperation = () => {
 const operations = ref([])
 
 const getAllOperation = async() => {
-    const result = await getOperations(user.value.current_budget)
+    const result = await getOperations(user.value.current_budget, month.value)
     operations.value = result
 
 }
 
 getAllOperation()
+
+
+watch(month, (newMonth, oldMonth) => {
+    getAllOperation();
+});
 
 const radius = 45;
 const velocities = ref([]);
