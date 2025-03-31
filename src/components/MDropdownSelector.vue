@@ -3,8 +3,10 @@
 import { incomeСategories, expenseСategories, fiatCurrencies, cryptoCurrencies } from '@/utils';
 
 const props = defineProps({
-    data: String,
-    required: true
+    data: {
+        type: String,
+        required: true
+    }
 })
 
 const emit = defineEmits(["close", "data"])
