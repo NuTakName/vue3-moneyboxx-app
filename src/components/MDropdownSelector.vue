@@ -1,6 +1,7 @@
 <script setup>
 
 import { incomeСategories, expenseСategories, fiatCurrencies, cryptoCurrencies } from '@/utils';
+import { months } from '@/utils';
 
 const props = defineProps({
     data: {
@@ -16,6 +17,10 @@ const closeDropdown = () => {
 }
 
 const setData = (data) => {
+    const index = months.findIndex(month => month === data);
+    if (index !== -1) {
+        data = index
+    }
     emit('data', data )
     closeDropdown()
 }
@@ -27,8 +32,10 @@ const getList = () => {
         return expenseСategories
     } else if (props.data === "fiat") {
         return fiatCurrencies
-    } else {
+    } else if (props.data === "crypto") {
         return cryptoCurrencies
+    } else {
+        return months
     }
 }
 
