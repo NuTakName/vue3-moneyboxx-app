@@ -77,6 +77,7 @@ const activeNavigation = ref(0)
 
 .m-nav-data-expense, .m-nav-data-income{
   width: 81px;
+  cursor: pointer;
 }
 
 .m-nav-data{
