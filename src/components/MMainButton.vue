@@ -3,8 +3,10 @@
 
 
 const props = defineProps({
-    name: String,
-    required: true
+    name: {
+        type: String, 
+        required: true
+    }
 })
 
 const emit = defineEmits(["click"])
