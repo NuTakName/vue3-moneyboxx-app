@@ -6,3 +6,6 @@
     commit('SET_USER', user);
   }
 
+  export const SET_CURRENT_MONTH = ({commit}, month) => {
+    commit("SET_CURRENT_MONTH", month)
+  }
