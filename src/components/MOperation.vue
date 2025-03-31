@@ -1,24 +1,36 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 import MMainButton from './MMainButton.vue';
 import MDropdownSelector from './MDropdownSelector.vue';
 import { expenseСategories, incomeСategories } from '@/utils';
 import { getOrAddCategory } from '@/api/categories';
-import { addOperation } from '@/api/operations';
+import { addOperation, deleteOperation, updateOperation } from '@/api/operations';
 
-let buttonName = "Добавить"
-
+const router = useRouter();
 const store = useStore();
 const user = computed(() => store.state.user);
 
 const emit = defineEmits(['close'])
 
+const props = defineProps({
+    operation: {
+        type: Object,
+        required: false,
+    },
+    operations: {
+        type: Array,
+        required: false,
+    }
+});
 
-const ammount = ref()
-const description = ref()
-const typeOperation = ref('income')
-const category = ref('Образование')
+
+const ammount = ref(props.operation ? props.operation.value : 0)
+const description = ref(props.operation ? props.operation.description : null)
+const typeOperation = ref(props.operation ? props.operation.type_ : "income")
+const category = ref(props.operation ? props.operation.category_name : "Образование");
+const buttonName = ref(props.operation ? "Удалить" : "Добавить")
 const isDropDownVisible = ref(false)
 
 
@@ -39,13 +51,28 @@ const currentCategory = computed(() => {
 
 })
 
-const closeAddOperation = () => {
-    emit('close')
+const closeAddOperation = async() => {
+    if (props.operation) {
+        if (
+            props.operation.value != ammount.value ||
+            props.operation.description != description.value ||
+            props.operation.category_name != category.value || 
+            props.operation.type_ != typeOperation.value
+        ) {
+            const cat = await getCategory()
+            const operation = generateOperation(cat)
+            operation.id = props.operation.id
+            await updateOperation(operation)
+        }
+    }
+    if (props.operations && props.operations.length === 1 && (props.operation.type_ != typeOperation.value || props.operation.category_name != category.value)) {
+        router.push('/');
+    } else {
+        emit('close')
+    }
 }
 
-
-
-const insertOperation = async() => {
+const getCategory = async() => {
     let c = {
         "photo_path": null,
         "type_": typeOperation.value,
@@ -54,6 +81,10 @@ const insertOperation = async() => {
         "user_id": user.value.id
     }
     let cat = await getOrAddCategory(c)
+    return cat
+}
+
+const generateOperation = (cat) => {
     let operation = {
         "budget_id": user.value.current_budget,
         "type_": typeOperation.value,
@@ -62,6 +93,21 @@ const insertOperation = async() => {
         "category_id": cat.id,
         "sub_category_id": null
     }
+    return operation
+}
+
+const insertOperation = async() => {
+    if (buttonName.value == 'Удалить') {
+        await deleteOperation(props.operation.id)
+        if (props.operations && props.operations.length === 1) {
+            router.push('/');
+        } else {
+            closeAddOperation();
+        }
+        return;
+    }
+    const cat = await getCategory()
+    const operation = generateOperation(cat)
     let result = await addOperation(operation)
     if (result) {
         closeAddOperation()
