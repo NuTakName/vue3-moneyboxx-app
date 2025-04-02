@@ -9,3 +9,8 @@
   export const SET_CURRENT_MONTH = ({commit}, month) => {
     commit("SET_CURRENT_MONTH", month)
   }
+
+
+  export const SET_DIFFERENCE = ({commit}, value) => {
+    commit("SET_DIFFERENCE", value)
+  }

@@ -6,7 +6,8 @@ import * as mutations from './mutations'
 const state = {
     tgUser: {},
     user: {},
-    month: null
+    month: null,
+    difference: null
 
   }
   
