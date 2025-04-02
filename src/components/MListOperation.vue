@@ -3,7 +3,7 @@ import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import MOperation from './MOperation.vue';
 import { formatDate, formatTime, formatValue } from '@/utils';
-import { getOperationsByCategoryId } from '@/api/operations';
+import { getOperationsByCategoryId, getOperationsByType } from '@/api/operations';
 
 
 const mark = ref()
@@ -18,14 +18,23 @@ const currentOperation = ref()
 const props = defineProps({
   id: {
     type: String,
-    required: true
+    required: false
+  },
+  type_ : {
+    type: String,
+    required: false
   }
 })
 
-const getOperations = async() => {
-  const result = await getOperationsByCategoryId(props.id, month.value)
-  operations.value = result
-}
+const getOperations = async () => {
+  if (props.type_ == 'income' || props.type_ == 'expense') {
+    const result = await getOperationsByType(props.type_, month.value)
+    operations.value = result
+  } else {
+    const result = await getOperationsByCategoryId(props.id, month.value)
+    operations.value = result
+  }
+};
 
 getOperations()
 
