@@ -5,11 +5,15 @@ import MMainButton from './MMainButton.vue';
 import MOperation from './MOperation.vue';
 import { getOperations } from '@/api/operations';
 import { formatValue } from '@/utils';
+import MBudgetSummary from './MBudgetSummary.vue';
 
 let buttonName = "+ Добавить операцию"
 const store = useStore();
 const user = computed(() => store.state.user);
 const month = computed(() => store.state.month)
+const totalIncome = ref("0")
+const totalExpense = ref("0")
+const difference = ref("0")
 
 const isCreateOperationVisible = ref(false)
 
@@ -25,10 +29,29 @@ const setOperation = () => {
 
 const operations = ref([])
 
-const getAllOperation = async() => {
-    const result = await getOperations(user.value.current_budget, month.value)
-    operations.value = result
-
+const getAllOperation = async () => {
+    let income = 0;
+    let expense = 0;
+    const result = await getOperations(user.value.current_budget, month.value);
+    operations.value = result;
+    if (operations.value.length > 0) {
+        for (const operation of operations.value) {
+            if (operation.type_ === 'income') {
+                income += operation.value;
+            } else {
+                expense += operation.value;
+            }
+        }
+        const currencySymbol = operations.value[0].currency_symbol;
+        const currencyCode = operations.value[0].currency_code;
+        difference.value = formatValue(income - expense, currencySymbol, currencyCode)
+        store.dispatch("SET_DIFFERENCE", difference.value)
+        totalIncome.value = formatValue(income, currencySymbol, currencyCode);
+        totalExpense.value = formatValue(expense, currencySymbol, currencyCode);
+    } else {
+        totalIncome.value = formatValue(0, '', ''); 
+        totalExpense.value = formatValue(0, '', '');
+    }
 }
 
 getAllOperation()
@@ -145,6 +168,11 @@ requestAnimationFrame(updatePositions);
 </script>
 
 <template>
+  <m-budget-summary 
+    :totalIncome="totalIncome" 
+    :totalExpense="totalExpense"
+    >
+  </m-budget-summary>
     <div class="m-operations">
         <router-link 
             v-for="(operation, index) in operations"
