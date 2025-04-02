@@ -22,9 +22,9 @@ const getOperations = async(currentBudget, currentMonth) => {
 }
 
 
-const getOperationsByCategoryId = async(categoryId) => {
+const getOperationsByCategoryId = async(categoryId, month) => {
     try{
-        const response = await axios.get(`${API_BASE_URL}/operations/list_by_category_id/${categoryId}`)
+        const response = await axios.get(`${API_BASE_URL}/operations/list_by_category_id/${categoryId}/${month}`)
         return response.data
     } catch {
         console.error("Не удалось получить список операций")
