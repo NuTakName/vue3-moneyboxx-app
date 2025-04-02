@@ -59,6 +59,8 @@ getAllOperation()
 
 watch(month, (newMonth, oldMonth) => {
     getAllOperation();
+    positions.value = [];
+    velocities.value = [];
 });
 
 const radius = 45;
