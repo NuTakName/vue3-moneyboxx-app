@@ -3,7 +3,7 @@ import { ref, onMounted, watch, computed} from 'vue';
 import { useStore } from 'vuex';
 import MMainButton from './MMainButton.vue';
 import MOperation from './MOperation.vue';
-import { getOperations } from '@/api/operations';
+import { getOperations, getDifference } from '@/api/operations';
 import { formatValue } from '@/utils';
 import MBudgetSummary from './MBudgetSummary.vue';
 
@@ -44,7 +44,8 @@ const getAllOperation = async () => {
         }
         const currencySymbol = operations.value[0].currency_symbol;
         const currencyCode = operations.value[0].currency_code;
-        difference.value = formatValue(income - expense, currencySymbol, currencyCode)
+        const diff = await getDifference(user.value.current_budget)
+        difference.value = formatValue(diff.difference, currencySymbol, currencyCode)
         store.dispatch("SET_DIFFERENCE", difference.value)
         totalIncome.value = formatValue(income, currencySymbol, currencyCode);
         totalExpense.value = formatValue(expense, currencySymbol, currencyCode);
