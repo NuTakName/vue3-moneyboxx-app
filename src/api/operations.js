@@ -33,7 +33,6 @@ const getOperationsByCategoryId = async(categoryId, month) => {
 
 
 const getOperationsByType = async (type_, month) => {
-    console.log(type_);
     try {
         const response = await axios.get(`${API_BASE_URL}/operations/list_by_type/${type_}/${month}`);
         return response.data;
@@ -61,5 +60,22 @@ const updateOperation = async(operation) => {
     }
 
 
+const getDifference = async (currentBudgetId) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/operations/difference/${currentBudgetId}`);
+        return response.data;
+    } catch (error) {
+        console.error("Не удалось получить список операций");
+    }
+    }
 
-export {addOperation, getOperations, getOperationsByCategoryId, deleteOperation, updateOperation, getOperationsByType}
+
+export {
+    addOperation,
+    getOperations, 
+    getOperationsByCategoryId, 
+    deleteOperation, 
+    updateOperation, 
+    getOperationsByType,
+    getDifference
+}
