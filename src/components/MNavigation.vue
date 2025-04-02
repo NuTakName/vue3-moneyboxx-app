@@ -1,10 +1,12 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
-import MDropdownSelector from './MDropdownSelector.vue';
+
 
 
 const store = useStore();
+const difference = computed(() => store.state.difference) 
+
 const navigations = [
   {"name": "Бюджет", "link": '/'},
   {"name": "Аккаунт", "link": '/account'},
@@ -12,18 +14,6 @@ const navigations = [
 ]
 
 const activeNavigation = ref(0)
-const data = ref('month')
-
-
-const isDropdownSelectorVisible = ref(false)
-
-const toogleIsDropdownSelectorVisible = () => {
-  isDropdownSelectorVisible.value = !isDropdownSelectorVisible.value
-}
-
-const setCurrentMonth = (month) => {
-  store.dispatch("SET_CURRENT_MONTH", month + 1)
-}
 
 </script>
 
@@ -37,20 +27,14 @@ const setCurrentMonth = (month) => {
       class="circle"
       @click="activeNavigation = index"
     > {{ item.name }}
+    <div 
+      v-if="item.name === 'Бюджет' && difference"
+      class="m-navigation-circle-value"
+      >
+        {{ difference }}
+    </div>
     </router-link>
   </div>
-  <div class="m-nav-data">
-    <div class="m-nav-data-income">+100</div>
-    <div @click="toogleIsDropdownSelectorVisible">Месяц 2025</div>
-    <div class="m-nav-data-expense">-200</div>
-  </div>
-  <m-dropdown-selector 
-    v-if="isDropdownSelectorVisible" 
-    :data="data"
-    @close="toogleIsDropdownSelectorVisible"
-    @data="setCurrentMonth"
-    >
-  </m-dropdown-selector>
 </template>
 
 <style scoped>
@@ -78,6 +62,7 @@ const setCurrentMonth = (month) => {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 .circle.active {
@@ -89,29 +74,19 @@ const setCurrentMonth = (month) => {
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
-.circle:last-child, .m-nav-data-expense{
+.circle:last-child{
   margin-right: 20px;
 }
 
-.circle:first-child, .m-nav-data-income{
+.circle:first-child{
   margin-left: 20px;
 }
 
-.m-nav-data-expense, .m-nav-data-income{
-  width: 81px;
-  cursor: pointer;
+
+.m-navigation-circle-value{
+  margin-top: 5px;
+  font-size: 10px;
+  color: black;
 }
-
-.m-nav-data{
-  width: 100%;
-  height: 8vh;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  text-align: center;
-  border-bottom: 4px solid black;
-}
-
-
 
 </style>
