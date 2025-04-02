@@ -176,7 +176,7 @@ requestAnimationFrame(updatePositions);
     <div class="m-operations">
         <router-link 
             v-for="(operation, index) in operations"
-            :to="{path: `/list_operation/${operation.category_id}`}"
+            :to="{path: `/list_operation/${operation.category_id}/${null}`}"
             :key="index"
             :class="['m-operation', getClass(operation)]"
             :style="{ top: positions[index]?.y + 'px', left: positions[index]?.x + 'px' }"
