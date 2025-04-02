@@ -11,6 +11,7 @@ import { addOperation, deleteOperation, updateOperation } from '@/api/operations
 const router = useRouter();
 const store = useStore();
 const user = computed(() => store.state.user);
+const month = computed(() => store.state.month)
 
 const emit = defineEmits(['close'])
 
@@ -85,13 +86,16 @@ const getCategory = async() => {
 }
 
 const generateOperation = (cat) => {
+    const currentDate = new Date()
+    currentDate.setMonth(month.value - 1)
     let operation = {
         "budget_id": user.value.current_budget,
         "type_": typeOperation.value,
         "value": ammount.value,
         "description": null,
         "category_id": cat.id,
-        "sub_category_id": null
+        "sub_category_id": null,
+        "date": currentDate
     }
     return operation
 }
