@@ -13,6 +13,8 @@ const currentMonth = computed(() => months[month.value - 1]);
 const currentYear = ref(new Date().getFullYear())
 const data = ref('month')
 const isDropdownSelectorVisible = ref(false)
+const income = 'income'
+const expense = 'expense'
 
 
 const props = defineProps({
@@ -42,17 +44,23 @@ const setCurrentMonth = (month) => {
 
 <template>
     <div class="m-budget-summary">
-        <div :class="['m-budget-summary-income', {'m-budget-summary-income-dark': tgUser.theme == 'dark'}]">
-        + {{ totalIncome }}
-    </div>
-    <div
+      <router-link
+        :to="{path: `/list_operation/${null}/${income}`}"
+        :class="['m-budget-summary-income', {'m-budget-summary-income-dark': tgUser.theme == 'dark'}]"
+      >
+      + {{ totalIncome }}
+      </router-link>
+      <div
         :class="['m-budget-summary-date', {'m-budget-summary-date-dark': tgUser.theme == 'dark'}]" 
         @click="toogleIsDropdownSelectorVisible">
         {{ currentMonth }} {{ currentYear }}
-    </div>
-    <div :class="['m-budget-summary-expense', {'m-budget-summary-expense-dark': tgUser.theme == 'dark'}]">
-        - {{ totalExpense }}
-    </div>
+      </div>
+      <router-link
+        :to="{path: `/list_operation/${null}/${expense}`}"
+        :class="['m-budget-summary-expense', {'m-budget-summary-expense-dark': tgUser.theme == 'dark'}]"
+      >
+      - {{ totalExpense }}
+      </router-link>
   </div>
   <m-dropdown-selector 
     v-if="isDropdownSelectorVisible" 
