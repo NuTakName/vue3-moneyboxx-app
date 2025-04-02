@@ -1,6 +1,5 @@
 <script setup>
 import { computed, ref } from 'vue';
-import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import MOperation from './MOperation.vue';
 import { formatDate, formatTime, formatValue } from '@/utils';
@@ -9,8 +8,8 @@ import { getOperationsByCategoryId } from '@/api/operations';
 
 const mark = ref()
 const store = useStore();
-const router = useRouter();
 const tgUser = computed(() => store.state.tgUser);
+const month = computed(() => store.state.month)
 const isUpdateOperationVisible = ref(false)
 const operations = ref([])
 const currentOperation = ref()
@@ -24,7 +23,7 @@ const props = defineProps({
 })
 
 const getOperations = async() => {
-  const result = await getOperationsByCategoryId(props.id)
+  const result = await getOperationsByCategoryId(props.id, month.value)
   operations.value = result
 }
 
