@@ -12,4 +12,14 @@ const addBudget = async(budget) => {
     }
 
 
-export {addBudget}
+const getBudgets = async (userId) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/budgets/list/${userId}`);
+        return response.data;
+    } catch (error) {
+        console.error("Не удалось получить список бюджета");
+    }
+    }
+
+
+export {addBudget, getBudgets}
