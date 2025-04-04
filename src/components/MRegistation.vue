@@ -11,7 +11,7 @@ import { addUser, setCurrentBudget } from '@/api/user';
 const store = useStore();
 const tgUser = computed(() => store.state.tgUser);
 
-const buttonName = "Создать аккаунт"
+
 
 const isDropDownVisible = ref(false)
 
@@ -22,6 +22,22 @@ const toogleDropDownVisible = () => {
 const currency = ref("fiat");
 const budgetName = ref()
 const currencyData = ref()
+
+const props = defineProps({
+    data: {
+        type: String,
+        required: false
+    }
+})
+
+const emit = defineEmits(["close"])
+
+const closeRegistartion = () => {
+    emit("close")
+}
+
+
+const buttonName = ref(props.data ? "Добавить" : "Создать аккаунт")
 
 const currentCurrency = computed(() => {
     if (!currencyData.value) {
@@ -35,10 +51,8 @@ const setCurrencyData = (currency) => {
     currencyData.value = currency
 }
 
-const initUser = async() => {
-    if (!budgetName.value) {
-        return;
-    }
+
+const getCurrency = async() => {
     let cur = {
         "name": currentCurrency.value.name,
         "code": currentCurrency.value.code,
@@ -46,6 +60,10 @@ const initUser = async() => {
         "type_": currency.value
     }
     let curEntity = await getOrAddCurrency(cur)
+    return curEntity
+}
+
+const getUser = async() => {
     let u = {
         "id": tgUser.value.id,
         "name": tgUser.value.name,
@@ -53,12 +71,19 @@ const initUser = async() => {
         "current_budget": null
         }
     await addUser(u)
+}
+
+const getBudget = async(curEntity) => {
     let budget = {
         "name": budgetName.value,
         "user_id": tgUser.value.id,
         "currency_id": curEntity.id
         }
     let budgetEntity = await addBudget(budget)
+    return budgetEntity
+}
+
+const updateCurrentBudget = async(budgetEntity) => {
     let data = {
         "user_id": tgUser.value.id,
         "current_budget": budgetEntity.id
@@ -68,12 +93,30 @@ const initUser = async() => {
 }
 
 
+
+const initUser = async() => {
+    if (!budgetName.value) {
+        return;
+    }
+    if (props.data){
+        let curEntity = await getCurrency()
+        await getBudget(curEntity)
+        closeRegistartion()
+        return
+    }
+    let curEntity = await getCurrency()
+    await getUser()
+    let budgetEntity = await getBudget(curEntity)
+    await updateCurrentBudget(budgetEntity)
+}
+
+
 </script>
 
 <template>
-  <div class="m-registration-container">
+  <div class="m-registration-container" @click="closeRegistartion">
     <header>
-        <h2>Добро пожаловать, {{ tgUser.name }}!</h2>
+        <h2  v-if="!props.data">Добро пожаловать, {{ tgUser.name }}!</h2>
     </header>
     <section>
       <p>Заполните информацию о бюджете</p>
@@ -84,27 +127,31 @@ const initUser = async() => {
             placeholder="Название"
             required
             v-model="budgetName"
+            @click.stop 
             >
         <div class="m-registration-radio">
             <input 
                 type="radio" 
                 value="fiat"
                 id="fiat" 
-                v-model="currency" 
+                v-model="currency"
+                @click.stop 
                 >Фиат
             <input 
                 type="radio" 
                 value="crypto"
                 id="crypto" 
                 v-model="currency" 
+                @click.stop
                 >Криптовалюта
         </div>
         <div 
             class="m-registration-currency"
             @click="toogleDropDownVisible"
+            @click.stop
             >{{ currentCurrency.name }}: {{ currentCurrency.code }}
         </div>
-        <MMainButton :name="buttonName"></MMainButton>
+        <MMainButton :name="buttonName" @click.stop></MMainButton>
       </form>
     </section>
   </div>
