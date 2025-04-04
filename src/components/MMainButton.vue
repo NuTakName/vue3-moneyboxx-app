@@ -9,10 +9,10 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(["click"])
+const emit = defineEmits(["click-button"])
 
 const clickButton = () => {
-    emit('click')
+    emit('click-button')
 }
 
 
