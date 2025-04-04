@@ -21,5 +21,14 @@ const getBudgets = async (userId) => {
     }
     }
 
+const deleteBudget = async (budgetId) => {
+    try {
+        const response = await axios.delete(`${API_BASE_URL}/budgets/${budgetId}`);
+        return response.data;
+    } catch (error) {
+        console.error("Не удалось удалить бюджет");
+    }
+    }
 
-export {addBudget, getBudgets}
+
+export {addBudget, getBudgets, deleteBudget}
