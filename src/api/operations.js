@@ -7,6 +7,8 @@ const addOperation = async(operation) => {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true',
+            'User-Agent': 'MyCustomUserAgent/1.0'
         },
         body: JSON.stringify(operation)
     });
@@ -19,7 +21,14 @@ const addOperation = async(operation) => {
 
 
 const getOperations = async(currentBudget, currentMonth) => {
-    const response = await fetch(`${API_BASE_URL}/operations/list/${currentBudget}/${currentMonth}`)
+    const response = await fetch(`${API_BASE_URL}/operations/list/${currentBudget}/${currentMonth}`, {
+        headers: {
+            'ngrok-skip-browser-warning': 'true',
+            'User-Agent': 'MyCustomUserAgent/1.0'
+        }
+    }
+
+    )
     if (response.ok) {
         return await response.json()
     } else {
@@ -29,7 +38,12 @@ const getOperations = async(currentBudget, currentMonth) => {
 
 
 const getOperationsByCategoryId = async(categoryId, month) => {
-    const response = await fetch(`${API_BASE_URL}/operations/list_by_category_id/${categoryId}/${month}`)
+    const response = await fetch(`${API_BASE_URL}/operations/list_by_category_id/${categoryId}/${month}`, {
+        headers: {
+            'ngrok-skip-browser-warning': 'true',
+            'User-Agent': 'MyCustomUserAgent/1.0'
+        }
+    })
     if (response.ok) {
         return await response.json()
     } else {
@@ -39,7 +53,12 @@ const getOperationsByCategoryId = async(categoryId, month) => {
 
 
 const getOperationsByType = async (type_, month) => {
-    const response = await fetch(`${API_BASE_URL}/operations/list_by_type/${type_}/${month}`);
+    const response = await fetch(`${API_BASE_URL}/operations/list_by_type/${type_}/${month}`, {
+        headers: {
+            'ngrok-skip-browser-warning': 'true',
+            'User-Agent': 'MyCustomUserAgent/1.0'
+        }
+    });
     if (response.ok) {
         return await response.json()
     } else {
@@ -49,7 +68,11 @@ const getOperationsByType = async (type_, month) => {
 
 const deleteOperation = async(operationId) => {
     const response = await fetch(`${API_BASE_URL}/operations/${operationId}`, {
-        method: "DELETE"
+        method: "DELETE",
+        headers: {
+            'ngrok-skip-browser-warning': 'true',
+            'User-Agent': 'MyCustomUserAgent/1.0'
+        }
     })
     if (!response) {
         console.error("Не удлаось удалить операцию")
@@ -62,6 +85,8 @@ const updateOperation = async(operation) => {
         method: "PUT",
         headers: {
             'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true',
+            'User-Agent': 'MyCustomUserAgent/1.0'
         },
         body: JSON.stringify(operation)
     });
@@ -74,7 +99,12 @@ const updateOperation = async(operation) => {
 
 
 const getDifference = async (currentBudgetId) => {
-    const response = await fetch(`${API_BASE_URL}/operations/difference/${currentBudgetId}`);
+    const response = await fetch(`${API_BASE_URL}/operations/difference/${currentBudgetId}`, {
+        headers: {
+            'ngrok-skip-browser-warning': 'true',
+            'User-Agent': 'MyCustomUserAgent/1.0'
+        }
+    });
     if (response.ok) {
         return await response.json()
     } else {

@@ -2,7 +2,14 @@ import API_BASE_URL from "@/config";
 
 
 const getUser = async(userId) => {
-    const response = await fetch(`${API_BASE_URL}/users/${userId}`);
+    const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
+        headers: {
+            'ngrok-skip-browser-warning': 'true',
+            'User-Agent': 'MyCustomUserAgent/1.0'
+        }
+    }
+    );
+    console.log(response)
     if (response.ok) {
         return await response.json()
     } else {
@@ -16,6 +23,8 @@ const addUser = async(u) => {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true',
+            'User-Agent': 'MyCustomUserAgent/1.0'
         },
         body: JSON.stringify(u)
     });
@@ -29,6 +38,8 @@ const setCurrentBudget = async(data) => {
         method: "PATCH",
         headers: {
             'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true',
+            'User-Agent': 'MyCustomUserAgent/1.0'
         },
         body: JSON.stringify(data)
     })
