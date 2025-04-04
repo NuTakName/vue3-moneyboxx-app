@@ -1,11 +1,15 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
+import MFinancialController from './MFinancialController.vue';
+import { router } from '@/router';
 
 
 
 const store = useStore();
 const difference = computed(() => store.state.difference) 
+const isFinancialControllerVisible = ref(false)
+const currentPage = ref("/")
 
 const navigations = [
   {"name": "Бюджет", "link": '/'},
@@ -14,6 +18,38 @@ const navigations = [
 ]
 
 const activeNavigation = ref(0)
+let longPressTimer = null;
+
+const startLongPress = (name) => {
+  longPressTimer = setTimeout(() => {
+    handleTouchStart(name);
+  }, 1500);
+};
+
+const endLongPress = () => {
+  clearTimeout(longPressTimer);
+};
+
+
+const handleTouchStart = (name) => {
+  if (name == "Копилка" || name == "Бюджет") {
+    isFinancialControllerVisible.value = true
+  }
+}
+
+const setData = (index, link) => {
+  console.log(link)
+  activeNavigation.value = index;
+  if (link != '/account') {
+    currentPage.value = link
+  }
+}
+
+
+const closeMFinancialController = () => {
+  isFinancialControllerVisible.value = false
+  router.push(currentPage.value)
+}
 
 </script>
 
@@ -25,7 +61,11 @@ const activeNavigation = ref(0)
       :key="index"
       :class="{ active: activeNavigation === index}"
       class="circle"
-      @click="activeNavigation = index"
+      @click="setData(index, item.link)"
+      @contextmenu.prevent="handleTouchStart(item.name)"
+      @touchstart="startLongPress(item.name)"
+      @touchend="endLongPress"
+      @touchcancel="endLongPress"
     > {{ item.name }}
     <div 
       v-if="item.name === 'Бюджет' && difference"
@@ -35,6 +75,12 @@ const activeNavigation = ref(0)
     </div>
     </router-link>
   </div>
+  <m-financial-controller 
+    v-if="isFinancialControllerVisible" 
+    :previousPage="currentPage"
+    @close="closeMFinancialController"
+    >
+  </m-financial-controller>
 </template>
 
 <style scoped>
