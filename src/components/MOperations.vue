@@ -32,6 +32,9 @@ const operations = ref([])
 const getAllOperation = async () => {
     let income = 0;
     let expense = 0;
+    if (!user.value) {
+      return
+    }
     const result = await getOperations(user.value.current_budget, month.value);
     operations.value = result;
     if (operations.value.length > 0) {
