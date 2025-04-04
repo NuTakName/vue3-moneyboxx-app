@@ -65,6 +65,14 @@ watch(month, (newMonth, oldMonth) => {
     getAllOperation();
 });
 
+
+watch(user, (newUser, oldUser) => {
+  positions.value = [];
+  velocities.value = [];
+  operations.value = [];
+  getAllOperation();
+})
+
 const radius = 45;
 const velocities = ref([]);
 const positions = ref([])
@@ -190,7 +198,7 @@ requestAnimationFrame(updatePositions);
         </router-link>
     </div>
 
-    <m-main-button :name="buttonName" @click="toogleIsCreateOperationVisilbe"></m-main-button>
+    <m-main-button :name="buttonName" @click-button="toogleIsCreateOperationVisilbe"></m-main-button>
     <m-operation 
         v-if="isCreateOperationVisible"
         @close="setOperation"
