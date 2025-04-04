@@ -1,18 +1,23 @@
 import API_BASE_URL from "@/config";
-import axios from "axios";
 
 
 
 const getOrAddCategory = async(category) => {
-    try {
-        const cat = await axios.get(`${API_BASE_URL}/categories/${category.user_id}/${category.type_}/${category.name}`)
-        return cat.data
-    } catch {
-        try {
-            const cat = await axios.post(`${API_BASE_URL}/categories/`, category);
-            return cat.data
-        } catch {
-            console.error("Не удалось добавить категорию")
+    const response = await fetch(`${API_BASE_URL}/categories/${category.user_id}/${category.type_}/${category.name}`)
+    if (response.ok) {
+        return await response.json()
+    } else {
+        const cat = await fetch(`${API_BASE_URL}/categories/`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(category)
+        });
+        if (cat.ok) {
+            return cat.json()
+        } else {
+            console.log("Не удалось добавить категорию")
         }
     }
 }

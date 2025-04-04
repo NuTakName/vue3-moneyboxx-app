@@ -1,73 +1,86 @@
 import API_BASE_URL from "@/config";
-import axios from "axios";
+
 
 
 const addOperation = async(operation) => {
-    try {
-        const response = await axios.post(`${API_BASE_URL}/operations/`, operation);
-        return response.data
-    } catch {
+    const response = await fetch(`${API_BASE_URL}/operations/`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(operation)
+    });
+     if (response.ok) {
+        return await response.json()
+     } else {
         console.error("Не удалось добавить операцию")
-    }
+     }
     }
 
 
 const getOperations = async(currentBudget, currentMonth) => {
-    try{
-        const response = await axios.get(`${API_BASE_URL}/operations/list/${currentBudget}/${currentMonth}`)
-        return response.data
-    } catch {
+    const response = await fetch(`${API_BASE_URL}/operations/list/${currentBudget}/${currentMonth}`)
+    if (response.ok) {
+        return await response.json()
+    } else {
         console.error("Не удалось получить список операций")
     }
 }
 
 
 const getOperationsByCategoryId = async(categoryId, month) => {
-    try{
-        const response = await axios.get(`${API_BASE_URL}/operations/list_by_category_id/${categoryId}/${month}`)
-        return response.data
-    } catch {
-        console.error("Не удалось получить список операций")
+    const response = await fetch(`${API_BASE_URL}/operations/list_by_category_id/${categoryId}/${month}`)
+    if (response.ok) {
+        return await response.json()
+    } else {
+        console.error("Не удалось получить операцию")
     }
 }
 
 
 const getOperationsByType = async (type_, month) => {
-    try {
-        const response = await axios.get(`${API_BASE_URL}/operations/list_by_type/${type_}/${month}`);
-        return response.data;
-    } catch (error) {
-        console.error("Не удалось получить список операций");
+    const response = await fetch(`${API_BASE_URL}/operations/list_by_type/${type_}/${month}`);
+    if (response.ok) {
+        return await response.json()
+    } else {
+        console.error("Не удалось получить список операций по категории")
     }
 }
 
 const deleteOperation = async(operationId) => {
-    try{
-        await axios.delete(`${API_BASE_URL}/operations/${operationId}`)
-    } catch {
-        console.error("Не удалось удалить операцию")
+    const response = await fetch(`${API_BASE_URL}/operations/${operationId}`, {
+        method: "DELETE"
+    })
+    if (!response) {
+        console.error("Не удлаось удалить операцию")
     }
 }
 
 
 const updateOperation = async(operation) => {
-    try {
-        const response = await axios.put(`${API_BASE_URL}/operations/`, operation);
-        return response.data
-    } catch {
+    const response = await fetch(`${API_BASE_URL}/operations/`, {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(operation)
+    });
+    if (response.ok) {
+        return await response.json()
+    } else {
         console.error("Не удалось обновить операцию")
     }
-    }
+}
 
 
 const getDifference = async (currentBudgetId) => {
-    try {
-        const response = await axios.get(`${API_BASE_URL}/operations/difference/${currentBudgetId}`);
-        return response.data;
-    } catch (error) {
-        console.error("Не удалось получить список операций");
+    const response = await fetch(`${API_BASE_URL}/operations/difference/${currentBudgetId}`);
+    if (response.ok) {
+        return await response.json()
+    } else {
+        console.error("Не удалось получить разницу операций")
     }
-    }
+}
 
 
 export {

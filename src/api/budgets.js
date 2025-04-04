@@ -1,34 +1,40 @@
 import API_BASE_URL from "@/config";
-import axios from "axios";
+
 
 
 const addBudget = async(budget) => {
-    try {
-        const buget = await axios.post(`${API_BASE_URL}/budgets/`, budget);
-        return buget.data
-    } catch {
-        console.error("Не удалось добавить бюджет")
-    }
+    const response = await fetch(`${API_BASE_URL}/budgets/`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(budget)
+        });
+        if (response.ok) {
+            return await response.json()
+        } else {
+            console.error("Не удалось добавить бюджет")
+        }
     }
 
 
 const getBudgets = async (userId) => {
-    try {
-        const response = await axios.get(`${API_BASE_URL}/budgets/list/${userId}`);
-        return response.data;
-    } catch (error) {
-        console.error("Не удалось получить список бюджета");
+    const response = await fetch(`${API_BASE_URL}/budgets/list/${userId}`);
+    if (response.ok) {
+        return await response.json()
+    } else {
+        console.error("Не удалось получить список бюджетов")
     }
-    }
+}
 
 const deleteBudget = async (budgetId) => {
-    try {
-        const response = await axios.delete(`${API_BASE_URL}/budgets/${budgetId}`);
-        return response.data;
-    } catch (error) {
-        console.error("Не удалось удалить бюджет");
+    const response = await fetch(`${API_BASE_URL}/budgets/${budgetId}`, {
+        method: "DELETE"
+    })
+    if (!response.ok) {
+        console.error("Не удалось удалить бюджет")
     }
-    }
+ }
 
 
 export {addBudget, getBudgets, deleteBudget}
