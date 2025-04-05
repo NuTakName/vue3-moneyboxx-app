@@ -4,7 +4,7 @@ import { useStore } from 'vuex';
 import MMainButton from './MMainButton.vue';
 import MOperation from './MOperation.vue';
 import { getOperations, getDifference } from '@/api/operations';
-import { formatValue } from '@/utils';
+import { formatValue, closeBackButton } from '@/utils';
 import MBudgetSummary from './MBudgetSummary.vue';
 
 let buttonName = "+ Добавить операцию"
@@ -15,6 +15,10 @@ const totalIncome = ref("0")
 const totalExpense = ref("0")
 const difference = ref("0")
 
+const backButton = window.Telegram.WebApp.BackButton;
+backButton.hide()
+
+closeBackButton()
 const isCreateOperationVisible = ref(false)
 
 const toogleIsCreateOperationVisilbe = () => {
