@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
-import MOperation from './MOperation.vue';
+import { router } from '@/router';
 import { formatDate, formatTime, formatValue } from '@/utils';
 import { getOperationsByCategoryId, getOperationsByType } from '@/api/operations';
 
@@ -26,25 +26,30 @@ const props = defineProps({
   }
 })
 
+const what = ref()
+const lenght = ref(0)
+
 const getOperations = async () => {
   if (props.type_ == 'income' || props.type_ == 'expense') {
     const result = await getOperationsByType(props.type_, month.value)
     operations.value = result
+    what.value = 'operations'
+    lenght.value = result.length;
   } else {
     const result = await getOperationsByCategoryId(props.id, month.value)
     operations.value = result
+    what.value = 'operation'
+    lenght.value = result.length;
   }
 };
 
 getOperations()
 
 
-const toogleUpdateOperationVisible = (operation) => {
-  if (operation) {
-    currentOperation.value = operation
-  }
-  getOperations()
-  isUpdateOperationVisible.value = !isUpdateOperationVisible.value
+const openAddOperation = (operation) => {
+  store.dispatch("SET_OPERATION", operation)
+  store.dispatch("SET_LENGHT_OPERATION", lenght.value)
+  router.push(`/add_operation/${what.value}`)
 }
 
 
@@ -96,7 +101,7 @@ const getClass = (operation) => {
         <div v-for="(operation, index) in operations" :key="index">
           <div 
             :class="['m-list-operation-info-container', {'m-list-operation-info-container-dark': tgUser.theme == 'dark'}]"
-            @click="toogleUpdateOperationVisible(operation)"
+            @click="openAddOperation(operation)"
           >
             <div class="m-list-operation-info">
               <div> {{ mark }} {{ formatValue(operation.value, operation.currency_symbol, operation.currency_code) }}</div>
@@ -104,13 +109,6 @@ const getClass = (operation) => {
             </div>
             <div class="m-list-operation-time">{{ formatTime(operation.date) }}</div>
           </div>
-          <m-operation 
-            v-if="isUpdateOperationVisible" 
-            @close="toogleUpdateOperationVisible"
-            :operation="currentOperation"
-            :operations="operations"
-          >
-          </m-operation>
         </div>
       </div>
     </div>
