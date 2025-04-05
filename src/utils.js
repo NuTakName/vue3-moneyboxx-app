@@ -1,3 +1,9 @@
+import {  router } from "./router"
+import { useStore } from "vuex"
+
+
+const store = useStore();
+
 const fiatCurrencies = [
     {name: "Рубль", code: "RUB", symbol: "₽"},
     {name: "Доллар", code: "USD", symbol: "$"},
@@ -112,6 +118,12 @@ const formatTime = (dateString) => {
   return date.toLocaleTimeString('ru-RU', options);
   }
 
+const closeBackButton = () => {
+  const backButton = window.Telegram.WebApp.BackButton;
+  backButton.hide()
+}
+
+
 
 export {
   fiatCurrencies,
@@ -121,5 +133,6 @@ export {
   formatValue, 
   formatDate, 
   formatTime,
-  months
+  months,
+  closeBackButton,
 }
