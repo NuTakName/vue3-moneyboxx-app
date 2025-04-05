@@ -3,13 +3,15 @@ import MOperations from "./components/MOperations.vue";
 import MAccount from "./components/MAccount.vue";
 import MMoneybox from "./components/MMoneybox.vue";
 import MListOperation from "./components/MListOperation.vue";
+import MOperation from "./components/MOperation.vue";
 
 
 const routes = [
     {path: '/', name: 'Operations', component: MOperations, props: true},
     {path: '/account', name: "Account", component: MAccount, props: true},
     {path: '/moneybox', name: "Moneybox", component: MMoneybox, props: true},
-    {path: '/list_operation/:id?/:type_?', name: "ListOperations", component: MListOperation, props: true}
+    {path: '/list_operation/:id?/:type_?', name: "ListOperations", component: MListOperation, props: true},
+    {path: '/add_operation/:what?', name: 'AddOperation', component: MOperation, props: true}
 ]
 
 const router = createRouter(
