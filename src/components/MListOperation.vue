@@ -10,9 +10,13 @@ const mark = ref()
 const store = useStore();
 const tgUser = computed(() => store.state.tgUser);
 const month = computed(() => store.state.month)
-const isUpdateOperationVisible = ref(false)
 const operations = ref([])
-const currentOperation = ref()
+
+const backButton = window.Telegram.WebApp.BackButton;
+backButton.show();
+backButton.onClick(function() {
+    router.push('/')
+})
 
 
 const props = defineProps({
@@ -28,9 +32,15 @@ const props = defineProps({
 
 const what = ref()
 const lenght = ref(0)
+const categoryName = ref()
 
 const getOperations = async () => {
   if (props.type_ == 'income' || props.type_ == 'expense') {
+    if (props.type_ == 'income'){
+      categoryName.value = "Доходы"
+    } else {
+      categoryName.value = 'Расходы'
+    }
     const result = await getOperationsByType(props.type_, month.value)
     operations.value = result
     what.value = 'operations'
@@ -88,7 +98,7 @@ const getClass = (operation) => {
 
 <template>
     <div v-if=operations.length :class="['m-list-operation-name', getClass(operations[0])]">
-       {{ operations[0].category_name }}
+       {{ categoryName ? categoryName: operations[0].category_name}}
     </div>
     <div class="scrollable">
       <div 
