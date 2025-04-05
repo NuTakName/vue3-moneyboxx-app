@@ -1,8 +1,8 @@
 <script setup>
 import { ref, onMounted, watch, computed} from 'vue';
 import { useStore } from 'vuex';
+import { router } from '@/router';
 import MMainButton from './MMainButton.vue';
-import MOperation from './MOperation.vue';
 import { getOperations, getDifference } from '@/api/operations';
 import { formatValue, closeBackButton } from '@/utils';
 import MBudgetSummary from './MBudgetSummary.vue';
@@ -21,14 +21,6 @@ backButton.hide()
 closeBackButton()
 const isCreateOperationVisible = ref(false)
 
-const toogleIsCreateOperationVisilbe = () => {
-    isCreateOperationVisible.value = !isCreateOperationVisible.value
-}
-
-const setOperation = () => {
-  getAllOperation()
-  toogleIsCreateOperationVisilbe()
-}
 
 
 const operations = ref([])
@@ -204,13 +196,7 @@ requestAnimationFrame(updatePositions);
             <div>{{ formatValue(operation.value, operation.currency_symbol, operation.currency_code) }}</div>
         </router-link>
     </div>
-
-    <m-main-button :name="buttonName" @click-button="toogleIsCreateOperationVisilbe"></m-main-button>
-    <m-operation 
-        v-if="isCreateOperationVisible"
-        @close="setOperation"
-        >
-    </m-operation>
+    <m-main-button :name="buttonName" @click-button="router.push('/add_operation/')"></m-main-button>
 </template>
 
 <style scoped>
