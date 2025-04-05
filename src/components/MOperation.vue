@@ -17,6 +17,12 @@ const length = computed(() => store.state.length)
 
 const emit = defineEmits(['close'])
 
+const backButton = window.Telegram.WebApp.BackButton;
+backButton.show();
+backButton.onClick(function() {
+    closeAddOperation()
+})
+
 const props = defineProps({
     what: {
         type: String,
