@@ -1,37 +1,35 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+import { router } from '@/router';
 import MMainButton from './MMainButton.vue';
 import MDropdownSelector from './MDropdownSelector.vue';
 import { expenseСategories, incomeСategories } from '@/utils';
 import { getOrAddCategory } from '@/api/categories';
 import { addOperation, deleteOperation, updateOperation } from '@/api/operations';
 
-const router = useRouter();
+
 const store = useStore();
 const user = computed(() => store.state.user);
 const month = computed(() => store.state.month)
+const operation = computed(() => store.state.operation)
+const length = computed(() => store.state.length)
 
 const emit = defineEmits(['close'])
 
 const props = defineProps({
-    operation: {
-        type: Object,
-        required: false,
-    },
-    operations: {
-        type: Array,
-        required: false,
+    what: {
+        type: String,
+        required: false
     }
 });
 
 
-const ammount = ref(props.operation ? props.operation.value : 0)
-const description = ref(props.operation ? props.operation.description : null)
-const typeOperation = ref(props.operation ? props.operation.type_ : "income")
-const category = ref(props.operation ? props.operation.category_name : "Образование");
-const buttonName = ref(props.operation ? "Удалить" : "Добавить")
+const ammount = ref(operation.value ? operation.value.value : 0);
+const description = ref(operation.value ? operation.value.description : null);
+const typeOperation = ref(operation.value ? operation.value.type_ : "income");
+const category = ref(operation.value ? operation.value.category_name : "Образование");
+const buttonName = ref(operation.value ? "Удалить" : "Добавить");
 const isDropDownVisible = ref(false)
 
 
@@ -53,24 +51,29 @@ const currentCategory = computed(() => {
 })
 
 const closeAddOperation = async() => {
-    if (props.operation) {
+    if (operation.value) {
         if (
-            props.operation.value != ammount.value ||
-            props.operation.description != description.value ||
-            props.operation.category_name != category.value || 
-            props.operation.type_ != typeOperation.value
+            operation.value.value != ammount.value ||
+            operation.value.description != description.value ||
+            operation.value.category_name != category.value || 
+            operation.value.type_ != typeOperation.value
         ) {
             const cat = await getCategory()
-            const operation = generateOperation(cat)
-            operation.id = props.operation.id
-            await updateOperation(operation)
+            const o = generateOperation(cat)
+            o.id = operation.value.id
+            await updateOperation(o)
         }
     }
-    if (props.operations && props.operations.length === 1 && (props.operation.type_ != typeOperation.value || props.operation.category_name != category.value)) {
-        router.push('/');
-    } else {
-        emit('close')
+    if (props.what && props.what == "operations") {
+        router.push(`/list_operation/${null}/${operation.value.type_}`)
     }
+    if (props.what && props.what == "operation") {
+        router.push(`/list_operation/${operation.value.category_id}/${null}`)
+    }
+    if (!props.what) {
+        router.push('/')
+    }
+    store.dispatch("REMOVE_OPERATION")
 }
 
 const getCategory = async() => {
@@ -100,10 +103,10 @@ const generateOperation = (cat) => {
     return operation
 }
 
-const insertOperation = async() => {
+const insertOrDeleteOperation = async() => {
     if (buttonName.value == 'Удалить') {
-        await deleteOperation(props.operation.id)
-        if (props.operations && props.operations.length === 1) {
+        await deleteOperation(operation.value.id)
+        if (length.value === 1) {
             router.push('/');
         } else {
             closeAddOperation();
@@ -111,8 +114,8 @@ const insertOperation = async() => {
         return;
     }
     const cat = await getCategory()
-    const operation = generateOperation(cat)
-    let result = await addOperation(operation)
+    const o = generateOperation(cat)
+    let result = await addOperation(o)
     if (result) {
         closeAddOperation()
     }
@@ -125,7 +128,7 @@ const insertOperation = async() => {
 
 <template>
     <div class="m-operation" @click="closeAddOperation">
-        <form class="m-operation-form" @submit.prevent="insertOperation">
+        <form class="m-operation-form" @submit.prevent="insertOrDeleteOperation">
             <label>Размер операции</label>
             <input 
                 type="number" 
