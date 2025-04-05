@@ -18,3 +18,15 @@ export const SET_DIFFERENCE = (state, value) => {
 export const SET_INDEX = (state, index) => {
   state.index = index
 }
+
+export const SET_OPERATION = (state, operation) => {
+  state.operation = operation
+}
+
+export const REMOVE_OPERATION = (state) => {
+  state.operation = null
+}
+
+export const SET_LENGHT_OPERATION = (state, length) => {
+  state.length = length
+}

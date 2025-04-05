@@ -8,7 +8,9 @@ const state = {
     user: {},
     month: null,
     difference: null,
-    index: 0
+    index: 0,
+    operation: null,
+    length: 0
 
   }
   
