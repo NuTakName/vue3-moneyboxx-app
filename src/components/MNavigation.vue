@@ -8,6 +8,7 @@ import { router } from '@/router';
 
 const store = useStore();
 const difference = computed(() => store.state.difference) 
+const index = computed(() => store.state.index)
 const isFinancialControllerVisible = ref(false)
 const currentPage = ref("/")
 
@@ -38,8 +39,7 @@ const handleTouchStart = (name) => {
 }
 
 const setData = (index, link) => {
-  console.log(link)
-  activeNavigation.value = index;
+  store.dispatch("SET_INDEX", index)
   if (link != '/account') {
     currentPage.value = link
   }
@@ -56,12 +56,12 @@ const closeMFinancialController = () => {
 <template>
   <div class="m-navigation">
     <router-link
-      v-for="(item, index) in navigations"
+      v-for="(item, i) in navigations"
       :to="item.link"
-      :key="index"
-      :class="{ active: activeNavigation === index}"
+      :key="i"
+      :class="{ active: i === index}"
       class="circle"
-      @click="setData(index, item.link)"
+      @click="setData(i, item.link)"
       @contextmenu.prevent="handleTouchStart(item.name)"
       @touchstart="startLongPress(item.name)"
       @touchend="endLongPress"
