@@ -14,3 +14,7 @@
   export const SET_DIFFERENCE = ({commit}, value) => {
     commit("SET_DIFFERENCE", value)
   }
+
+  export const SET_INDEX = ({commit}, index) => {
+    commit("SET_INDEX", index)
+  }

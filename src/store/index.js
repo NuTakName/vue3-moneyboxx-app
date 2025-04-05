@@ -7,7 +7,8 @@ const state = {
     tgUser: {},
     user: {},
     month: null,
-    difference: null
+    difference: null,
+    index: 0
 
   }
   
