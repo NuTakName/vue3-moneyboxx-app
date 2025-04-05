@@ -9,7 +9,6 @@ const getUser = async(userId) => {
         }
     }
     );
-    console.log(response)
     if (response.ok) {
         return await response.json()
     } else {
@@ -46,7 +45,7 @@ const setCurrentBudget = async(data) => {
     if (response.ok) {
         return await response.json()
     } else {
-        console.log("Не удалось установить текущий бюджет")
+        console.error("Не удалось установить текущий бюджет")
     }
 }
 
