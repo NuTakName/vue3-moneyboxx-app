@@ -7,7 +7,7 @@ import { getOperations, getDifference } from '@/api/operations';
 import { formatValue, closeBackButton } from '@/utils';
 import MBudgetSummary from './MBudgetSummary.vue';
 
-let buttonName = "+ Добавить операцию"
+const buttonName = "+ Добавить операцию"
 const store = useStore();
 const user = computed(() => store.state.user);
 const month = computed(() => store.state.month)
@@ -19,8 +19,6 @@ const backButton = window.Telegram.WebApp.BackButton;
 backButton.hide()
 
 closeBackButton()
-const isCreateOperationVisible = ref(false)
-
 
 
 const operations = ref([])
