@@ -12,9 +12,7 @@ const props = defineProps({
 
 const emit = defineEmits(["close", "data"])
 
-const closeDropdown = () => {
-    emit('close')
-}
+const closeDropdown = () => {emit('close')}
 
 const setData = (data) => {
     const index = months.findIndex(month => month === data);
