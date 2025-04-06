@@ -1,5 +1,4 @@
 <script setup>
-import { computed, ref } from 'vue';
 import { fiatCurrencies, cryptoCurrencies } from '@/utils';
 
 const props = defineProps({
@@ -10,10 +9,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits(["close", "currency"])
-
-const closeCurrency = () => {
-    emit('close')
-}
+const closeCurrency = () => {emit('close')}
 
 const setCurrency = (currency) => {
     emit('currency', currency )
