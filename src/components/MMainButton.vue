@@ -40,7 +40,7 @@ const clickButton = () => {
     transform: translateX(-50%);
     width: 80%;
     color: black;
-    background-color: blue;
+    background-color: var(--tg-theme-button-color);
     padding: 15px 0px 15px 0px;
     text-align: center;
     border: 3px solid black;
