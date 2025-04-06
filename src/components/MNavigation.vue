@@ -18,7 +18,6 @@ const navigations = [
   {"name": "Копилка", "link": '/moneybox'},
 ]
 
-const activeNavigation = ref(0)
 let longPressTimer = null;
 
 const startLongPress = (name) => {
@@ -43,6 +42,7 @@ const setData = (index, link) => {
   if (link != '/account') {
     currentPage.value = link
   }
+  router.push(link)
 }
 
 
@@ -55,9 +55,8 @@ const closeMFinancialController = () => {
 
 <template>
   <div class="m-navigation">
-    <router-link
+    <div
       v-for="(item, i) in navigations"
-      :to="item.link"
       :key="i"
       :class="{ active: i === index}"
       class="circle"
@@ -73,7 +72,7 @@ const closeMFinancialController = () => {
       >
         {{ difference }}
     </div>
-    </router-link>
+  </div>
   </div>
   <m-financial-controller 
     v-if="isFinancialControllerVisible" 
