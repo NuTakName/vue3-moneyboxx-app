@@ -13,8 +13,6 @@ const currentMonth = computed(() => months[month.value - 1]);
 const currentYear = ref(new Date().getFullYear())
 const data = ref('month')
 const isDropdownSelectorVisible = ref(false)
-const income = 'income'
-const expense = 'expense'
 
 
 const props = defineProps({
@@ -45,7 +43,7 @@ const setCurrentMonth = (month) => {
 <template>
     <div class="m-budget-summary">
       <router-link
-        :to="{path: `/list_operation/${null}/${income}`}"
+        :to="{path: `/list_operation/${null}/income`}"
         :class="['m-budget-summary-income', {'m-budget-summary-income-dark': tgUser.theme == 'dark'}]"
       >
       + {{ totalIncome }}
@@ -56,7 +54,7 @@ const setCurrentMonth = (month) => {
         {{ currentMonth }} {{ currentYear }}
       </div>
       <router-link
-        :to="{path: `/list_operation/${null}/${expense}`}"
+        :to="{path: `/list_operation/${null}/expense`}"
         :class="['m-budget-summary-expense', {'m-budget-summary-expense-dark': tgUser.theme == 'dark'}]"
       >
       - {{ totalExpense }}
