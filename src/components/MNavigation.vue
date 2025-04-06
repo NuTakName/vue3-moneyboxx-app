@@ -87,7 +87,7 @@ const closeMFinancialController = () => {
 
 .m-navigation{
   width: 100%;
-  height: 15vh;
+  height: 17vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
