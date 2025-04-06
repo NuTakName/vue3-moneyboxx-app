@@ -82,7 +82,7 @@ button{
     width: 60%;
     text-align: center;
     color: black;
-    background-color: blue;
+    background-color: var(--tg-theme-button-color);
     padding: 10px;
     border: 3px solid black;
     border-radius: 12px;
