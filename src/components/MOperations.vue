@@ -196,7 +196,7 @@ requestAnimationFrame(updatePositions);
             <div>{{ formatValue(operation.value, operation.currency_symbol, operation.currency_code) }}</div>
         </router-link>
     </div>
-    <m-main-button :name="buttonName" @click-button="router.push('/add_operation/')"></m-main-button>
+    <m-main-button :name="buttonName" @click-button="router.push('/add_operation')"></m-main-button>
 </template>
 
 <style scoped>
