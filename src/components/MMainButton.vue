@@ -1,7 +1,5 @@
 <script setup>
 
-
-
 const props = defineProps({
     name: {
         type: String, 
@@ -10,11 +8,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits(["click-button"])
-
-const clickButton = () => {
-    emit('click-button')
-}
-
+const clickButton = () => {emit('click-button')}
 
 
 
