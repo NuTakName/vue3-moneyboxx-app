@@ -205,7 +205,7 @@ requestAnimationFrame(updatePositions);
 .m-operations{
     width: 100%;
     border-bottom: 4px solid black;
-    height: 66.5vh;
+    height: 64vh;
     position: relative;
 }
 
