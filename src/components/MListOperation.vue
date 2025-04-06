@@ -30,7 +30,6 @@ const props = defineProps({
   }
 })
 
-const what = ref()
 const lenght = ref(0)
 const categoryName = ref()
 
@@ -43,12 +42,10 @@ const getOperations = async () => {
     }
     const result = await getOperationsByType(props.type_, month.value)
     operations.value = result
-    what.value = 'operations'
     lenght.value = result.length;
   } else {
     const result = await getOperationsByCategoryId(props.id, month.value)
     operations.value = result
-    what.value = 'operation'
     lenght.value = result.length;
   }
 };
@@ -59,7 +56,7 @@ getOperations()
 const openAddOperation = (operation) => {
   store.dispatch("SET_OPERATION", operation)
   store.dispatch("SET_LENGHT_OPERATION", lenght.value)
-  router.push(`/add_operation/${what.value}`)
+  router.push('/add_operation')
 }
 
 
