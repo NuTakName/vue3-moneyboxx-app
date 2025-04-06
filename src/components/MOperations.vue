@@ -49,6 +49,7 @@ const getAllOperation = async () => {
     } else {
         totalIncome.value = formatValue(0, '', ''); 
         totalExpense.value = formatValue(0, '', '');
+        store.dispatch("SET_DIFFERENCE", 0)
     }
 }
 
