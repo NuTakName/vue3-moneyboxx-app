@@ -96,20 +96,37 @@ const generateOperation = (cat) => {
 
 const insertOrDeleteOperation = async() => {
     if (buttonName.value == 'Удалить') {
-        await deleteOperation(operation.value.id)
-        if (length.value === 1) {
-            router.push('/');
+        if (user.value.id != 2) {
+            const params = {
+                message: 'Вы уверены, что хотите удалить операцию?',
+                buttons: [
+                    { id: 'cancel', text: 'Нет' },
+                    { id: 'confirm', text: 'Да' }
+                ]};
+            const buttonId = await new Promise((resolve) => {
+                window.Telegram.WebApp.showPopup(params, resolve);
+            });
+            if (buttonId == "confirm") {
+                await deleteOperation(operation.value.id)
+            }
         } else {
-            closeAddOperation();
+            await deleteOperation(operation.value.id)
         }
-        return;
     }
-    const cat = await getCategory()
-    const o = generateOperation(cat)
-    let result = await addOperation(o)
-    if (result) {
-        closeAddOperation()
+    else {
+        const cat = await getCategory()
+        const o = generateOperation(cat)
+        let result = await addOperation(o)
+        if (result) {
+            closeAddOperation()
+        }
     }
+    if (length.value === 1) {
+        router.push('/');
+    } else {
+        closeAddOperation();
+    }
+    return;
 }
 
 
