@@ -21,12 +21,6 @@ backButton.onClick(function() {
     closeDropdown()
 })
 
-const props = defineProps({
-    previousPage: {
-        type: String,
-        required: true
-    }
-})
 
 
 const emit = defineEmits(["close", "data"])
