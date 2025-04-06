@@ -207,7 +207,7 @@ const insertOrDeleteOperation = async() => {
 
 .m-operation-category{
     color: black;
-    background-color: blue;
+    background-color: var(--tg-theme-button-color);
     padding: 10px;
     border: 3px solid black;
     border-radius: 12px;
@@ -215,7 +215,7 @@ const insertOrDeleteOperation = async() => {
     font-size: 18px;
     font-weight: 700;
     width: 100%;
-    height: 7vh;
+    height: 10vh;
     min-height: 50px;
     display: flex;
     align-items: center;
