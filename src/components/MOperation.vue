@@ -23,13 +23,6 @@ backButton.onClick(function() {
     closeAddOperation()
 })
 
-const props = defineProps({
-    what: {
-        type: String,
-        required: false
-    }
-});
-
 
 const ammount = ref(operation.value ? operation.value.value : 0);
 const description = ref(operation.value ? operation.value.description : null);
@@ -70,15 +63,7 @@ const closeAddOperation = async() => {
             await updateOperation(o)
         }
     }
-    if (props.what && props.what == "operations") {
-        router.push(`/list_operation/${null}/${operation.value.type_}`)
-    }
-    if (props.what && props.what == "operation") {
-        router.push(`/list_operation/${operation.value.category_id}/${null}`)
-    }
-    if (!props.what) {
-        router.push('/')
-    }
+    router.back()
     store.dispatch("REMOVE_OPERATION")
 }
 
