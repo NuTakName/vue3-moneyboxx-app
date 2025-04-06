@@ -76,7 +76,6 @@ const closeMFinancialController = () => {
   </div>
   <m-financial-controller 
     v-if="isFinancialControllerVisible" 
-    :previousPage="currentPage"
     @close="closeMFinancialController"
     >
   </m-financial-controller>
