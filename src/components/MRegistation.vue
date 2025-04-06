@@ -207,7 +207,7 @@ h2{
 .m-registration-currency{
     text-align: center;
     color: black;
-    background-color: white;
+    background-color: var(--tg-theme-button-color);
     padding: 10px;
     border: 3px solid black;
     border-radius: 12px;
