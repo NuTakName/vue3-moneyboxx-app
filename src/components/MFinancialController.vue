@@ -51,7 +51,7 @@ const toogleAndUpdateListBudgets = () => {
 }
 
 const deleteAndGetNewListBudgets = async(budgetId) => {
-    if (user.value.is !=2) {
+    if (user.value.id != 2) {
         const params = {
             message: 'Вы уверены, что хотите удалить бюджет?',
             buttons: [
