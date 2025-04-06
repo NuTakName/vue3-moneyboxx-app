@@ -15,6 +15,12 @@ const data = ref("Добавить")
 const budgets = ref([])
 const isCreateBudgetVisible = ref(false)
 
+const backButton = window.Telegram.WebApp.BackButton;
+backButton.show();
+backButton.onClick(function() {
+    closeDropdown()
+})
+
 const props = defineProps({
     previousPage: {
         type: String,
@@ -26,6 +32,7 @@ const props = defineProps({
 const emit = defineEmits(["close", "data"])
 const closeDropdown = () => {
     emit('close')
+    backButton.hide()
 }
 
 
@@ -50,7 +57,22 @@ const toogleAndUpdateListBudgets = () => {
 }
 
 const deleteAndGetNewListBudgets = async(budgetId) => {
-    await deleteBudget(budgetId)
+    if (user.value.is !=2) {
+        const params = {
+            message: 'Вы уверены, что хотите удалить бюджет?',
+            buttons: [
+                { id: 'cancel', text: 'Нет' },
+                { id: 'confirm', text: 'Да' }
+            ]};
+            const buttonId = await new Promise((resolve) => {
+                window.Telegram.WebApp.showPopup(params, resolve);
+            });
+            if (buttonId == "confirm") {
+                await deleteBudget(budgetId)
+            }
+    } else {
+        await deleteBudget(budgetId)
+    }
     getList()
 }
 
@@ -126,7 +148,7 @@ button{
     width: 90%;
     text-align: center;
     color: black;
-    background-color: blue;
+    background-color: var(--tg-theme-button-color);
     padding: 10px;
     border: 3px solid black;
     border-radius: 12px;
