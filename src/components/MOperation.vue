@@ -15,8 +15,6 @@ const month = computed(() => store.state.month)
 const operation = computed(() => store.state.operation)
 const length = computed(() => store.state.length)
 
-const emit = defineEmits(['close'])
-
 const backButton = window.Telegram.WebApp.BackButton;
 backButton.show();
 backButton.onClick(function() {
