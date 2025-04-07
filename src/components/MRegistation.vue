@@ -151,9 +151,9 @@ const initUser = async() => {
             @click.stop
             >{{ currentCurrency.name }}: {{ currentCurrency.code }}
         </div>
-        <MMainButton :name="buttonName" @click.stop></MMainButton>
       </form>
     </section>
+    <MMainButton :name="buttonName" @click.stop="initUser"></MMainButton>
   </div>
   <m-dropdown-selector
     v-if="isDropDownVisible" 
@@ -186,10 +186,22 @@ h2{
     font-weight: 500;
 }
 
+form{
+    width: 100%;
+}
+
+section{
+    height: 89%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 .m-registration-budget-title{
     width: 100%;
     height: 5vh;
-    border-radius: 12px;
+    border-radius: 10px;
     border: none;
     outline: none;
     color: black;
@@ -207,6 +219,7 @@ h2{
 .m-registration-currency{
     text-align: center;
     color: black;
+    width: 100%;
     background-color: var(--tg-theme-button-color);
     padding: 10px;
     border: 3px solid black;
