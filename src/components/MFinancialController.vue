@@ -85,21 +85,23 @@ getList()
 
 <template>
     <div class="m-financial-controler" @click="closeDropdown">
-        <div 
-            class="m-financial-controller-content" 
-            v-if="budgets.length"
-            v-for="(item, index) in budgets"
-            :key="index">
-            <button 
-                @click="setData(item.id)" 
-                @click.stop>
-                {{ item.name }}
-            </button>
+        <div class="m-financial-controller-content-container">
             <div 
-                v-if="item.id != user.current_budget"
-                class="m-finanial-controller-delete"
-                @click="deleteAndGetNewListBudgets(item.id)"
-                @click.stop>X
+                class="m-financial-controller-content" 
+                v-if="budgets.length"
+                v-for="(item, index) in budgets"
+                :key="index">
+                <button 
+                    @click="setData(item.id)" 
+                    @click.stop>
+                    {{ item.name }}
+                </button>
+                <div 
+                    v-if="item.id != user.current_budget"
+                    class="m-finanial-controller-delete"
+                    @click="deleteAndGetNewListBudgets(item.id)"
+                    @click.stop>X
+                </div>
             </div>
         </div>
         <m-main-button 
@@ -137,6 +139,15 @@ getList()
 .m-financial-controller-content{
     width: 60%;
     display: flex;
+}
+
+.m-financial-controller-content-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 89vh;
+    width: 100%;
 }
 
 button{
