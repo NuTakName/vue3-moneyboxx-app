@@ -79,6 +79,12 @@ const setCurrentMonth = (month) => {
     margin-left: 20px;
 }
 
+.m-budget-summary-income:hover, .m-budget-summary-expense:hover{
+    background-color: transparent;
+}
+
+
+
 .m-budget-summary-expense{
     color: #6f0f0f;
     margin-right: 20px;
