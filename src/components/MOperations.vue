@@ -195,7 +195,9 @@ requestAnimationFrame(updatePositions);
             <div>{{ formatValue(operation.value, operation.currency_symbol, operation.currency_code) }}</div>
         </router-link>
     </div>
-    <m-main-button :name="buttonName" @click-button="router.push('/add_operation')"></m-main-button>
+    <div class="m-operations-footer">
+      <m-main-button :name="buttonName" @click-button="router.push('/add_operation')"></m-main-button>
+    </div>
 </template>
 
 <style scoped>
@@ -238,6 +240,13 @@ requestAnimationFrame(updatePositions);
 
 .income{
   background-color: #097004;
+}
+
+.m-operations-footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 11vh;
 }
 
 </style>
