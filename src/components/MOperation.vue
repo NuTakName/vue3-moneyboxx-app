@@ -61,7 +61,11 @@ const closeAddOperation = async() => {
             await updateOperation(o)
         }
     }
-    router.back()
+    if (!operation.value) {
+        router.push("/")
+    } else {
+        router.back()
+    }
     store.dispatch("REMOVE_OPERATION")
 }
 
@@ -84,7 +88,7 @@ const generateOperation = (cat) => {
         "budget_id": user.value.current_budget,
         "type_": typeOperation.value,
         "value": ammount.value,
-        "description": null,
+        "description": description.value,
         "category_id": cat.id,
         "sub_category_id": null,
         "date": currentDate
