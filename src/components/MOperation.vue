@@ -61,7 +61,7 @@ const closeAddOperation = async() => {
             await updateOperation(o)
         }
     }
-    if (!operation.value) {
+    if (length.value == 1) {
         router.push("/")
     } else {
         router.back()
@@ -114,7 +114,7 @@ const insertOrDeleteOperation = async() => {
         } else {
             await deleteOperation(operation.value.id)
         }
-        store.dispatch("REMOVE_OPERATION")
+        closeAddOperation()
     }
     else {
         if (ammount.value == 0) {
@@ -126,11 +126,6 @@ const insertOrDeleteOperation = async() => {
         if (result) {
             closeAddOperation()
         }
-    }
-    if (length.value === 1) {
-        router.push('/');
-    } else {
-        closeAddOperation();
     }
     return;
 }
@@ -220,6 +215,7 @@ const insertOrDeleteOperation = async() => {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin: 10px 0px 10px 0px;
     color: white;
     font-size: 16px;
