@@ -16,7 +16,7 @@ const clickButton = () => {emit('click-button')}
 
 <template>
     <button 
-        class="m-main-button-container"
+        class="m-main-button"
         @click="clickButton"
         type="submit"
         >
@@ -27,15 +27,11 @@ const clickButton = () => {emit('click-button')}
 
 <style scoped>
 
-.m-main-button-container {
-    position: fixed;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
+.m-main-button{
     width: 80%;
     color: black;
     background-color: var(--tg-theme-button-color);
-    padding: 15px 0px 15px 0px;
+    padding: 10px 0px 10px 0px;
     text-align: center;
     border: 3px solid black;
     border-radius: 12px;
