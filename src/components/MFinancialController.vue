@@ -37,6 +37,7 @@ const setData = async (currentBudgetId) => {
     }
     let newUser = await setCurrentBudget(data) 
     store.dispatch("SET_USER", newUser)
+    store.dispatch("REMOVE_OPERATION")
     emit('data', data)
     closeDropdown()
 }
