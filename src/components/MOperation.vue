@@ -114,8 +114,12 @@ const insertOrDeleteOperation = async() => {
         } else {
             await deleteOperation(operation.value.id)
         }
+        store.dispatch("REMOVE_OPERATION")
     }
     else {
+        if (ammount.value == 0) {
+            return
+        }
         const cat = await getCategory()
         const o = generateOperation(cat)
         let result = await addOperation(o)
@@ -173,10 +177,8 @@ const insertOrDeleteOperation = async() => {
                 @click.stop="toogleDropDownVisible" 
                 >Категория: {{ currentCategory }}
             </div>
-            <div @click.stop>
-                <m-main-button :name="buttonName"></m-main-button>
-            </div>
         </form>
+        <m-main-button :name="buttonName" @click.stop="insertOrDeleteOperation"></m-main-button>
     </div>
     <m-dropdown-selector
         v-if="isDropDownVisible"
@@ -209,7 +211,9 @@ const insertOrDeleteOperation = async() => {
     display: flex;
     align-items: center;
     flex-direction: column;
+    justify-content: center;
     width: 50%;
+    height: 89vh;
 }
 
 .m-operation-form-radio{
