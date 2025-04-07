@@ -115,10 +115,8 @@ const initUser = async() => {
 
 <template>
   <div class="m-registration-container" @click="closeRegistartion">
-    <header>
-        <h2  v-if="!props.data">Добро пожаловать, {{ tgUser.name }}!</h2>
-    </header>
     <section>
+      <h2  v-if="!props.data">Добро пожаловать, {{ tgUser.name }}!</h2>
       <p>Заполните информацию о бюджете</p>
       <form @submit.prevent="initUser">
         <input 
@@ -210,6 +208,7 @@ section{
 .m-registration-radio{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin: 15px 0px 15px 0px;
     color: white;
     font-weight: 500;
