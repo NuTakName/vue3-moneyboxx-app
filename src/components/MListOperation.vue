@@ -194,13 +194,11 @@ const getClass = (operation) => {
 }
 
 .m-list-operation-info{
-  width: 81px;
   text-align: center;
   margin-left: 20px;
 }
 
 .m-list-operation-time{
-  width: 81px;
   text-align: center;
   margin-right: 20px;
 }
