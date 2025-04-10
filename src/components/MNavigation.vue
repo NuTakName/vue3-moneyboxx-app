@@ -9,6 +9,7 @@ import { router } from '@/router';
 const store = useStore();
 const difference = computed(() => store.state.difference) 
 const index = computed(() => store.state.index)
+const user = computed(() => store.state.user)
 const isFinancialControllerVisible = ref(false)
 const currentPage = ref("/")
 
@@ -71,6 +72,12 @@ const closeMFinancialController = () => {
       class="m-navigation-circle-value"
       >
         {{ difference }}
+    </div>
+    <div 
+      v-if="item.name === 'Аккаунт' && user.money"
+      class="m-navigation-circle-value"
+      >
+        {{ user.money }}
     </div>
   </div>
   </div>
