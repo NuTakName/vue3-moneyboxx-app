@@ -30,3 +30,7 @@
   export const SET_LENGHT_OPERATION = ({commit}, length) => {
     commit("SET_LENGHT_OPERATION", length)
   }
+
+  export const SET_CURRENT_MONEYBOX = ({commit}, moneybox) => {
+    commit("SET_CURRENT_MONEYBOX", moneybox)
+  }

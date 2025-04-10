@@ -10,7 +10,8 @@ const state = {
     difference: null,
     index: 0,
     operation: null,
-    length: 0
+    length: 0,
+    moneybox: null
 
   }
   

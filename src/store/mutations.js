@@ -30,3 +30,8 @@ export const REMOVE_OPERATION = (state) => {
 export const SET_LENGHT_OPERATION = (state, length) => {
   state.length = length
 }
+
+
+export const SET_CURRENT_MONEYBOX = (state, moneybox) => {
+  state.moneybox = moneybox
+}

@@ -6,3 +6,4 @@ export const DIFFERENCE = state => state.difference
 export const INDEX = state => state.index
 export const OPERATION = state => state.operation
 export const LENGTH = state => state.length
+export const MONEYBOX = state => state.moneybox
