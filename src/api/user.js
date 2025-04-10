@@ -50,5 +50,40 @@ const setCurrentBudget = async(data) => {
 }
 
 
+const collectBonus = async(data) => {
+    const response = await fetch(`${API_BASE_URL}/users/collect_bonus`, {
+        method: "PATCH",
+        headers: {
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true',
+            'User-Agent': 'MyCustomUserAgent/1.0'
+        },
+        body: JSON.stringify(data)
+    })
+    if (response.ok) {
+        return await response.json()
+    } else {
+        console.error("Не удалось забрать бонус")
+    }
+}
 
-export {getUser, addUser, setCurrentBudget}
+
+const setCurrentMoneybox = async(data) => {
+    const response = await fetch(`${API_BASE_URL}/users/set_current_moneybox`, {
+        method: "PATCH",
+        headers: {
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true',
+            'User-Agent': 'MyCustomUserAgent/1.0'
+        },
+        body: JSON.stringify(data)
+    })
+    if (response.ok) {
+        return await response.json()
+    } else {
+        console.error("Не удалось установить текущую копилку")
+    }
+}
+
+
+export {getUser, addUser, setCurrentBudget, collectBonus, setCurrentMoneybox}

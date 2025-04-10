@@ -1,5 +1,6 @@
 import store from "@/store";
 import { getUser } from "./user";
+import { getMoneybox } from "./moneybox";
 
 const tgUser = {
     name: '',
@@ -30,6 +31,10 @@ const tgUser = {
     store.dispatch('SET_TG_USER', tgUser);
     const user = await getUser(tgUser.id)
     await store.dispatch('SET_USER', user);
+    if (user.current_moneybox)  {
+      const moneybox = await getMoneybox(user.current_moneybox)
+      store.dispatch ("SET_CURRENT_MONEYBOX", moneybox)
+    }
     const month = new Date().getMonth() + 1
     await store.dispatch('SET_CURRENT_MONTH', month)
   };
