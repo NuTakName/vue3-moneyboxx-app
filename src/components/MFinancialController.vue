@@ -69,8 +69,9 @@ const toogleAndUpdateListItems = () => {
 
 const deleteItemAndGetNewList = async(itemId) => {
     if (user.value.id != 2) {
+        const entity = props.data == 'Бюджет' ? "бюджет" : "копилку"
         const params = {
-            message: `'Вы уверены, что хотите удалить ${props.data.toLowerCase()}'`,
+            message: `Вы уверены, что хотите удалить ${entity}?`,
             buttons: [
                 { id: 'cancel', text: 'Нет' },
                 { id: 'confirm', text: 'Да' }
