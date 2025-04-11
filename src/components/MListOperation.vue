@@ -62,7 +62,7 @@ const openAddOperation = (operation) => {
 
 const groupOperation = computed(() => {
     return operations.value.reduce((acc, operation) => {
-        const dateKey = formatDate(operation.date);
+        const dateKey = formatDate(operation.date, true);
         if (!acc[dateKey]) {
             acc[dateKey] = [];
         }
