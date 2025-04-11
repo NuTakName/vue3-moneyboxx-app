@@ -230,7 +230,7 @@ requestAnimationFrame(updatePositions);
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
   cursor: pointer;
   text-decoration: none;
-  background-color: blue;
+  background-color: var(--tg-theme-button-color);
 }
 
 
