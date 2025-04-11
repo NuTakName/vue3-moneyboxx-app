@@ -10,8 +10,19 @@ const store = useStore();
 const difference = computed(() => store.state.difference) 
 const index = computed(() => store.state.index)
 const user = computed(() => store.state.user)
+const moneybox = computed(() => store.state.moneybox)
 const isFinancialControllerVisible = ref(false)
 const currentPage = ref("/")
+const data = ref()
+
+
+const moneyboxPercent = computed(() => {
+    if (moneybox.value.goal_balance <= 0) return 0;
+    const percentage = (moneybox.value.current_balance / moneybox.value.goal_balance) * 100;
+    const clampedPercentage = Math.max(0, Math.min(100, percentage));
+    return Number.isInteger(clampedPercentage) ? clampedPercentage.toString() : clampedPercentage.toFixed(1);
+});
+
 
 const navigations = [
   {"name": "Бюджет", "link": '/'},
@@ -34,6 +45,7 @@ const endLongPress = () => {
 
 const handleTouchStart = (name) => {
   if (name == "Копилка" || name == "Бюджет") {
+    data.value = name
     isFinancialControllerVisible.value = true
   }
 }
@@ -79,11 +91,18 @@ const closeMFinancialController = () => {
       >
         {{ user.money }}
     </div>
+    <div
+      v-if="item.name === 'Копилка' && moneyboxPercent && moneyboxPercent != 0"
+      class="m-navigation-circle-value"
+      >
+        {{ moneyboxPercent }} %
+    </div>
   </div>
   </div>
   <m-financial-controller 
     v-if="isFinancialControllerVisible" 
     @close="closeMFinancialController"
+    :data="data"
     >
   </m-financial-controller>
 </template>
@@ -116,6 +135,13 @@ const closeMFinancialController = () => {
   flex-direction: column;
 }
 
+@media (min-width: 768px) {
+  .circle {
+    width: 78px;
+    height: 78px;
+  }
+}
+
 .circle.active {
   transform: scale(1.2);
   border: 3px solid black;
@@ -135,7 +161,6 @@ const closeMFinancialController = () => {
 
 
 .m-navigation-circle-value{
-  margin-top: 5px;
   font-size: 10px;
   color: black;
 }
