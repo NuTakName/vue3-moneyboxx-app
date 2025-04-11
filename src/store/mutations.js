@@ -35,3 +35,7 @@ export const SET_LENGHT_OPERATION = (state, length) => {
 export const SET_CURRENT_MONEYBOX = (state, moneybox) => {
   state.moneybox = moneybox
 }
+
+export const UPDATE_MONEYBOX_CURRENT_BALANCE = (state, balance) => {
+  state.moneybox.current_balance = balance 
+}
