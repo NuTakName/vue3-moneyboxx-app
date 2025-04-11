@@ -31,6 +31,7 @@ const isDropdownSelectorVisible = ref(false)
 const isDataPickerVisible = ref(false)
 const isPeriodDataVisible = ref(true)
 
+const emit = defineEmits(["close"])
 
 const getFormattedDateString = computed(() => {
   return date.value.toLocaleDateString('ru-RU', {
@@ -95,7 +96,8 @@ const createMoneybox = async() => {
         store.dispatch("SET_USER", newUser)
         let m = await getMoneybox(moneyboxEntity.id)
         store.dispatch("SET_CURRENT_MONEYBOX", m)
-    }   
+    }
+    emit('close')
 }
 
 </script>
@@ -172,6 +174,7 @@ const createMoneybox = async() => {
   align-items: center;
   justify-content: center;
   color: white;
+  z-index: 1000;
 }
 
 .m-create-moneybox{
@@ -196,7 +199,7 @@ input{
 
 .m-create-moneybox-currency{
     color: black;
-    background-color: blue;
+    background-color: var(--tg-theme-button-color);
     padding: 10px;
     border: 3px solid black;
     border-radius: 12px;
