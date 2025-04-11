@@ -17,6 +17,17 @@ const toogleMoneyboxUpdateVisible = () => {
 
 const buttonName = 'Наполнить'
 
+const moneyboxPercent = computed(() => {
+  if (!moneybox.value){
+    return 0
+  }
+  if (moneybox.value.goal_balance <= 0) return 0;
+  const percentage = (moneybox.value.current_balance / moneybox.value.goal_balance) * 100;
+  const clampedPercentage = Math.max(0, Math.min(100, percentage));
+  return clampedPercentage
+});
+
+
 </script>
     
 
@@ -37,9 +48,16 @@ const buttonName = 'Наполнить'
         <m-data-chart></m-data-chart>
     </div>
     <div class="m-moneybox-statistic-footer">
-        <m-main-button :name="buttonName" @click-button="toogleMoneyboxUpdateVisible"></m-main-button>
+        <m-main-button
+          v-if="moneyboxPercent < 100"
+          :name="buttonName" 
+          @click-button="toogleMoneyboxUpdateVisible">
+        </m-main-button>
     </div>
-    <m-moneybox-update v-if="isMoneyboxUpdateVisible" @close="toogleMoneyboxUpdateVisible"></m-moneybox-update>
+    <m-moneybox-update 
+      v-if="isMoneyboxUpdateVisible" 
+      @close="toogleMoneyboxUpdateVisible">
+    </m-moneybox-update>
 
 </template>
     
