@@ -6,6 +6,7 @@ import MMainButton from './MMainButton.vue';
 import { updateMoneyboxCurrentBalance } from '@/api/moneybox';
 
 const store = useStore();
+const user = computed(() => store.state.user)
 const moneybox = computed(() => store.state.moneybox)
 const buttonName = 'Внести'
 
@@ -17,19 +18,49 @@ const closeForm = () => {
 }
 
 
-const updateMoneyboxAmount = async() => {
-    if (amount.value > 0) {
-        const data = {
-            "id": moneybox.value.id,
-            "amount": amount.value
-        }
-        let newMoneybox = await updateMoneyboxCurrentBalance(data)
-        store.dispatch("UPDATE_MONEYBOX_CURRENT_BALANCE", newMoneybox.current_balance)
+const updateMoneyboxAmount = async () => {
+    if (amount.value === 0) {
+        return;
     }
-    closeForm()
 
-}
+    let data = {
+        id: moneybox.value.id,
+        amount: amount.value
+    };
 
+    let newMoneybox;
+    const targetBalance = moneybox.value.goal_balance;
+    const newBalance = moneybox.value.current_balance + amount.value;
+
+    if (newBalance > targetBalance) {
+        const differency = Math.abs(newBalance - targetBalance);
+        const message = `Вы превышаете объем копилки на ${differency} ${moneybox.value.currency.code}. Уверены, что хотите продолжить?`;
+
+        if (user.value.id !== 2) {
+            const params = {
+                message: message,
+                buttons: [
+                    { id: 'cancel', text: 'Нет' },
+                    { id: 'confirm', text: 'Да' }
+                ]
+            };
+
+            const buttonId = await new Promise((resolve) => {
+                window.Telegram.WebApp.showPopup(params, resolve);
+            });
+
+            if (buttonId !== "confirm") {
+                return;
+            }
+        }
+    }
+    if (newBalance >= targetBalance) {
+        data.is_finished = true;
+    }
+    newMoneybox = await updateMoneyboxCurrentBalance(data);
+    store.dispatch("UPDATE_MONEYBOX_CURRENT_BALANCE", newMoneybox.current_balance);
+    closeForm();
+};
 
 </script>
 
