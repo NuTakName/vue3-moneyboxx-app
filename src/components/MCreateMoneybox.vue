@@ -5,9 +5,10 @@ import MMainButton from './MMainButton.vue';
 import MDropdownSelector from './MDropdownSelector.vue';
 import { getOrAddCurrency } from '@/api/currency';
 import MDataPicker from './MDataPicker.vue';
-import {formatDateToISO } from '@/utils';
+import {formatDateToISO,  format} from '@/utils';
 import { addMoneybox } from '@/api/moneybox';
 import { setCurrentMoneybox } from '@/api/user';
+import { getMoneybox } from '@/api/moneybox';
 
 
 const store = useStore();
@@ -66,7 +67,7 @@ const setCurrency = (data) => {
 
 
 const createMoneybox = async() => {
-    if (!currentCurrency.value || !name.value) {
+    if (!currentCurrency.value || !name.value || !amount.value) {
         return
     }
     let cur = {
@@ -81,7 +82,7 @@ const createMoneybox = async() => {
         "name": name.value,
         "currency_id": curEntity.id,
         "current_balance": 0,
-        "goal_balance": 0,
+        "goal_balance": amount.value,
         "goal_date": formatDateToISO(date.value)
     }
     let moneyboxEntity = await addMoneybox(moneybox)
@@ -92,7 +93,8 @@ const createMoneybox = async() => {
         }
         let newUser = await setCurrentMoneybox(data)
         store.dispatch("SET_USER", newUser)
-        store.dispatch("SET_CURRENT_MONEYBOX", moneyboxEntity)
+        let m = await getMoneybox(moneyboxEntity.id)
+        store.dispatch("SET_CURRENT_MONEYBOX", m)
     }   
 }
 
@@ -138,7 +140,7 @@ const createMoneybox = async() => {
                     selectText="выбрать"
                     :enable-time-picker="false"
                     :min-date="new Date()"
-                    :format="format"
+                    :format="format(date)"
                     @update:model-value="updateDate">
                 </m-data-picker>
             </form>
