@@ -98,14 +98,15 @@ const formatValue = (value, symbol, code) => {
 
 
 
-const formatDate = (dateString) => {
-  const options = { 
-    weekday: 'short',
-    day: 'numeric',
-    month: 'long'
-  };
-  const date = new Date(dateString);
-  return date.toLocaleString('ru-RU', options);
+  const formatDate = (dateString, weekday) => {
+    const options = {
+      ...(weekday ? { weekday: 'short' } : {}),
+      day: 'numeric',
+      month: 'long'
+    };
+    
+    const date = new Date(dateString);
+    return date.toLocaleString('ru-RU', options);
   };
   
 const formatTime = (dateString) => {
@@ -145,6 +146,13 @@ const formatDateToISO = (date) => {
 }
 
 
+const format = (date) => {
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${year}-${month}-${day}`;
+}
+
 export {
   fiatCurrencies,
   cryptoCurrencies, 
@@ -157,4 +165,5 @@ export {
   closeBackButton,
   getRegistrationDate,
   formatDateToISO,
+  format
 }
