@@ -37,14 +37,14 @@ const getBonus = async() => {
     <div class="m-account-container">
         <div class="m-account-info">
             <img :src="tgUser.photo_url" class="m-account-info-photo"/>
-            <div class="m-account-info-data">
+            <div :class="['m-account-info-data', {'m-account-info-data-dark': tgUser.theme == 'dark'}]">
                 <p>{{ tgUser.name }}</p>
                 <p>Стандартный аккаунт</p>
                 <p>Дата регистрации: {{ getRegistrationDate(user.registration_date) }} г.</p>
             </div>
         </div>
         <button class="m-account-upgrade-btn">Улучшить до премиум</button>
-        <div class="m-account-settings">
+        <div :class="['m-account-settings', {'m-account-settings-dark': tgUser.theme == 'dark'}]">
             <div>
                 <p>Язык</p>
                 <p>Вид бюджета</p>
@@ -95,6 +95,11 @@ const getBonus = async() => {
     flex-direction: column;
     justify-content: center;
     margin-left: 15px;
+    color: black;
+}
+
+.m-account-info-data-dark{
+    color: white;
 }
 
 .m-account-upgrade-btn{
@@ -110,6 +115,11 @@ const getBonus = async() => {
     width: 80%;;
     justify-content: space-between;
     display: flex;
+    color: black;
+}
+
+.m-account-settings-dark{
+    color: white;
 }
 
 .m-account-footer{
