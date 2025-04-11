@@ -1,8 +1,3 @@
-import {  router } from "./router"
-import { useStore } from "vuex"
-
-
-const store = useStore();
 
 const fiatCurrencies = [
     {name: "Рубль", code: "RUB", symbol: "₽"},
