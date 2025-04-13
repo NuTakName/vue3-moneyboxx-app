@@ -33,6 +33,23 @@ const navigations = [
   {"name": "Копилка", "link": '/moneybox'},
 ]
 
+const updateIndex = () => {
+  let index
+  const currentPath = window.location.pathname;
+  if (currentPath == "/account") {
+    index = 1
+  } else if (currentPath == "/moneybox"){
+    index = 2
+  } else {
+    index = 0
+  }
+  store.dispatch("SET_INDEX", index)
+}
+
+
+updateIndex()
+
+
 let longPressTimer = null;
 
 const startLongPress = (name) => {
