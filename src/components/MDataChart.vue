@@ -30,9 +30,11 @@ const filledPercentage = computed(() => {
 
 const data = computed(() => {
     let filled = (moneybox.value.current_balance / moneybox.value.goal_balance) * 100;
-    if (moneybox.value.current_balance <= 0 || moneybox.value.goal_balance <= 0) {
+    if (moneybox.value.goal_balance <= 0) {
         filled = 0;
-}
+    } else {
+        filled = Math.min(100, filled);
+    }
 
 const notFilled = 100 - filled;
 
