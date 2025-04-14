@@ -39,3 +39,8 @@ export const SET_CURRENT_MONEYBOX = (state, moneybox) => {
 export const UPDATE_MONEYBOX_CURRENT_BALANCE = (state, balance) => {
   state.moneybox.current_balance = balance 
 }
+
+export const SET_INCOME_AND_EXPENSE_OPERATIONS = (state, incomeOperations, expenseOperations) => {
+  state.incomeOperations = incomeOperations
+  state.expenseOperations = expenseOperations
+}

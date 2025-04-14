@@ -11,7 +11,9 @@ const state = {
     index: 0,
     operation: null,
     length: 0,
-    moneybox: null
+    moneybox: null,
+    incomeOperations: null,
+    expenseOperations: null
 
   }
   

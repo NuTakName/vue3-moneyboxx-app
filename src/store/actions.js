@@ -39,3 +39,7 @@
   export const UPDATE_MONEYBOX_CURRENT_BALANCE = ({commit}, balance) => {
     commit("UPDATE_MONEYBOX_CURRENT_BALANCE", balance)
   }
+
+  export const SET_INCOME_AND_EXPENSE_OPERATIONS = ({commit}, incomeOperations, expenseOperations) => {
+    commit("SET_INCOME_AND_EXPENSE_OPERATIONS", incomeOperations, expenseOperations)
+  }
