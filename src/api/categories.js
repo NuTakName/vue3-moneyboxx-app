@@ -24,7 +24,7 @@ const getOrAddCategory = async(category) => {
         if (cat.ok) {
             return cat.json()
         } else {
-            console.log("Не удалось добавить категорию")
+            console.error("Не удалось добавить категорию")
         }
     }
 }
