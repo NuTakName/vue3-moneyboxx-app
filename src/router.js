@@ -4,6 +4,8 @@ import MAccount from "./components/MAccount.vue";
 import MMoneybox from "./components/MMoneybox.vue";
 import MListOperation from "./components/MListOperation.vue";
 import MOperation from "./components/MOperation.vue";
+import MAccountStatistic from "./components/MAccountStatistic.vue";
+import MAllStatistic from "./components/MAllStatistic.vue";
 
 
 const routes = [
@@ -11,7 +13,9 @@ const routes = [
     {path: '/account', name: "Account", component: MAccount, props: true},
     {path: '/moneybox', name: "Moneybox", component: MMoneybox, props: true},
     {path: '/list_operation/:id?/:type_?', name: "ListOperations", component: MListOperation, props: true},
-    {path: '/add_operation', name: 'AddOperation', component: MOperation}
+    {path: '/add_operation', name: 'AddOperation', component: MOperation},
+    {path: '/statistic', name: "Ststistic", component: MAccountStatistic},
+    {path: '/all_statistic/:type_', name: "AllStatistic", component: MAllStatistic, props: true}
 ]
 
 const router = createRouter(
