@@ -31,6 +31,7 @@ const navigations = [
   {"name": "Бюджет", "link": '/'},
   {"name": "Аккаунт", "link": '/account'},
   {"name": "Копилка", "link": '/moneybox'},
+  {"name": "Статистика", "link": '/statistic'}
 ]
 
 const updateIndex = () => {
@@ -40,6 +41,8 @@ const updateIndex = () => {
     index = 1
   } else if (currentPath == "/moneybox"){
     index = 2
+  } else if ( currentPath == '/statistic'){
+    index = 3
   } else {
     index = 0
   }
@@ -141,8 +144,8 @@ const closeMFinancialController = () => {
 
 .circle {
   cursor: pointer;
-  width: 81px;
-  height: 81px;
+  width: 78px;
+  height: 78px;
   border-radius: 50%;
   border: 1px solid black;
   background-color: var(--tg-theme-button-color);
