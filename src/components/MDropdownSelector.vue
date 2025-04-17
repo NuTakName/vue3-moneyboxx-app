@@ -5,7 +5,7 @@ import { months } from '@/utils';
 
 const props = defineProps({
     data: {
-        type: String,
+        type: [String, Array],
         required: true
     }
 })
@@ -32,6 +32,8 @@ const getList = () => {
         return fiatCurrencies
     } else if (props.data === "crypto") {
         return cryptoCurrencies
+    } else if (Array.isArray(props.data)) {
+        return props.data;
     } else {
         return months
     }
@@ -80,7 +82,7 @@ button{
     width: 60%;
     text-align: center;
     color: black;
-    background-color: var(--tg-theme-button-color);
+    background-color: white;
     padding: 10px;
     border: 3px solid black;
     border-radius: 12px;
